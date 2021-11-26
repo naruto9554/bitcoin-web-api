@@ -16,7 +16,9 @@ public class MarketService : IMarketService
     public async Task<int> GetLongestDownwardTrend(string fromDate, string toDate)
     {
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
-        return data.Prices.Length;
+        var marketData = MarketMapper.MapMarketChartToMarketData(data);
+
+        return marketData.Count;
     }
 
     public async Task<string> GetHighestTradingVolumeDate(string fromDate, string toDate)
