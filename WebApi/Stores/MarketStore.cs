@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -38,11 +39,16 @@ public class MarketStore : IMarketStore
             var response = await httpClient.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
-                _logger.LogInformation("Successfully found market chart data");
                 var json = await response.Content.ReadAsStringAsync();
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 var marketChart = JsonSerializer.Deserialize<MarketChart>(json, options);
                 var data = MarketDataMapper.MapMarketChartToMarketChartPoints(marketChart);
+                if (data.Any())
+                {
+                    _logger.LogInformation($"Successfully found market chart data. Points {data.Count}");
+                    return data;
+                }
+                _logger.LogInformation($"Market chart data not found");
                 return data;
             }
 
