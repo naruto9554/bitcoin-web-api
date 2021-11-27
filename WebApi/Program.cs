@@ -47,7 +47,7 @@ app.MapGet("/highestradingvolume", async (string fromDate, string toDate) =>
         var result = await service.GetHighestTradingVolume(fromDate, toDate);
         return JsonSerializer.Serialize<TradeVolume>(result, serializerOptions);
     }
-}).WithName("GetHighestTradingVolumeDate");
+}).WithName("GetHighestTradingVolume");
 
 app.MapGet("/buyandsell", async (string fromDate, string toDate) =>
 {
