@@ -1,6 +1,6 @@
 # Requirements
 
-- .NET 6 SDK
+- .NET 6 SDK (Download [here](https://dotnet.microsoft.com/download/dotnet/6.0))
 
 # Running
 
@@ -25,4 +25,4 @@ dotnet test
 
 # Using
 
-Test API endpoints with built-in Swagger by going to localhost:5555/swagger
+Test API endpoints locally with built-in [Swagger](https://localhost:5555/swagger)
