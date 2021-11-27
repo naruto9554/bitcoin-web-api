@@ -11,7 +11,7 @@ public static class DateHelper
 
     public static DateTimeOffset UnixTimeToDateTimeOffset(long unixTime)
     {
-        return DateTimeOffset.FromUnixTimeSeconds(unixTime);
+        return DateTimeOffset.FromUnixTimeMilliseconds(unixTime);
     }
 
     public static string DateTimeOffsetToDate(DateTimeOffset datetime)

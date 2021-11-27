@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -34,7 +35,8 @@ app.MapGet("/highestradingvolume", async (string fromDate, string toDate) =>
     using (var scope = app.Services.CreateScope())
     {
         var service = scope.ServiceProvider.GetService<IMarketService>();
-        return await service.GetHighestTradingVolumeDate(fromDate, toDate);
+        var result = await service.GetHighestTradingVolume(fromDate, toDate);
+        return JsonSerializer.Serialize<TradeVolume>(result);
     }
 }).WithName("GetHighestTradingVolumeDate");
 

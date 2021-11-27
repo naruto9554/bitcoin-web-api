@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
@@ -18,16 +19,26 @@ public class MarketService : IMarketService
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
         var marketChartPoints = MarketMapper.MapMarketChartToMarketChartPoints(data);
 
-        return marketChartPoints.Count;
-    }
-
-    public async Task<string> GetHighestTradingVolumeDate(string fromDate, string toDate)
-    {
         throw new NotImplementedException();
     }
 
-    public async Task<(string BuyDate, string SellDate)> GetBuyAndSellDates(string fromDate, string toDate)
+    public async Task<TradeVolume> GetHighestTradingVolume(string fromDate, string toDate)
     {
+        var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
+        var marketChartPoints = MarketMapper.MapMarketChartToMarketChartPoints(data);
+        var highest = marketChartPoints.MaxBy(x => x.TotalVolume);
+        return new TradeVolume
+        {
+            Date = DateHelper.DateTimeOffsetToDate(highest.Date),
+            Volume = highest.TotalVolume
+        };
+    }
+
+    public async Task<DateRange> GetBuyAndSellDates(string fromDate, string toDate)
+    {
+        var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
+        var marketChartPoints = MarketMapper.MapMarketChartToMarketChartPoints(data);
+
         throw new NotImplementedException();
     }
 }
