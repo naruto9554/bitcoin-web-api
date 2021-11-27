@@ -24,4 +24,17 @@ public static class ListHelper
 
         return longest;
     }
+
+    public static bool IsOnlyDecreasing(List<decimal> values)
+    {
+        for (var i = 1; i < values.Count; i++)
+        {
+            if (values[i] > values[i - 1])
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

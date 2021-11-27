@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -17,26 +18,43 @@ public class MarketService : IMarketService
     public async Task<int> GetLongestDownwardTrend(string fromDate, string toDate)
     {
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
-        var longest = ListHelper.LongestConsecutiveDecreasingSubset(data.Select(x => x.Price).ToList());
-        return longest;
+        var longestDownwardPrice = ListHelper.LongestConsecutiveDecreasingSubset(data.Select(x => x.Price).ToList());
+        return longestDownwardPrice;
     }
 
     public async Task<TradeVolume> GetHighestTradingVolume(string fromDate, string toDate)
     {
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
-        var highest = data.MaxBy(x => x.TotalVolume);
+        var highestByTotalVolume = data.MaxBy(x => x.TotalVolume);
         return new TradeVolume
         {
-            Date = DateHelper.DateTimeOffsetToDate(highest.Date),
-            Volume = highest.TotalVolume
+            Date = DateHelper.DateTimeOffsetToDate(highestByTotalVolume.Date),
+            Volume = highestByTotalVolume.TotalVolume,
         };
     }
 
-    public async Task<DateRange> GetBuyAndSellDates(string fromDate, string toDate)
+    public async Task<TradeDate> GetBestBuyAndSellDates(string fromDate, string toDate)
     {
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
 
+        var priceIsOnlyDecreasing = ListHelper.IsOnlyDecreasing(data.Select(x => x.Price).ToList());
 
-        throw new NotImplementedException();
+        if (priceIsOnlyDecreasing)
+        {
+            return new TradeDate
+            {
+                SellDate = null,
+                BuyDate = null,
+            };
+        }
+
+        var lowestByPrice = data.MinBy(x => x.Price);
+        var highestByPrice = data.MaxBy(x => x.Price);
+
+        return new TradeDate
+        {
+            SellDate = DateHelper.DateTimeOffsetToDate(highestByPrice.Date),
+            BuyDate = DateHelper.DateTimeOffsetToDate(lowestByPrice.Date),
+        };
     }
 }
