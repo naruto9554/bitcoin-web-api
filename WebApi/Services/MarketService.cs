@@ -17,7 +17,6 @@ public class MarketService : IMarketService
     public async Task<int> GetLongestDownwardTrend(string fromDate, string toDate)
     {
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
-        var marketChartPoints = MarketMapper.MapMarketChartToMarketChartPoints(data);
 
         throw new NotImplementedException();
     }
@@ -25,8 +24,7 @@ public class MarketService : IMarketService
     public async Task<TradeVolume> GetHighestTradingVolume(string fromDate, string toDate)
     {
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
-        var marketChartPoints = MarketMapper.MapMarketChartToMarketChartPoints(data);
-        var highest = marketChartPoints.MaxBy(x => x.TotalVolume);
+        var highest = data.MaxBy(x => x.TotalVolume);
         return new TradeVolume
         {
             Date = DateHelper.DateTimeOffsetToDate(highest.Date),
@@ -37,7 +35,7 @@ public class MarketService : IMarketService
     public async Task<DateRange> GetBuyAndSellDates(string fromDate, string toDate)
     {
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
-        var marketChartPoints = MarketMapper.MapMarketChartToMarketChartPoints(data);
+
 
         throw new NotImplementedException();
     }

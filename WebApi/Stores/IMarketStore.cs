@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 public interface IMarketStore
 {
-    Task<MarketChart> GetMarketChartByDateRange(string fromDate, string toDate);
+    Task<List<MarketChartPoint>> GetMarketChartByDateRange(string fromDate, string toDate);
 }

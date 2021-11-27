@@ -17,7 +17,7 @@ public class MarketStore : IMarketStore
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<MarketChart> GetMarketChartByDateRange(string fromDate, string toDate)
+    public async Task<List<MarketChartPoint>> GetMarketChartByDateRange(string fromDate, string toDate)
     {
         var id = "bitcoin";
         var vs_currency = "eur";
@@ -41,7 +41,8 @@ public class MarketStore : IMarketStore
                 _logger.LogInformation("Successfully found market chart data");
                 var json = await response.Content.ReadAsStringAsync();
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                var data = JsonSerializer.Deserialize<MarketChart>(json, options);
+                var marketChart = JsonSerializer.Deserialize<MarketChart>(json, options);
+                var data = MarketDataMapper.MapMarketChartToMarketChartPoints(marketChart);
                 return data;
             }
 
