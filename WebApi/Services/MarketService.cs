@@ -17,8 +17,8 @@ public class MarketService : IMarketService
     public async Task<int> GetLongestDownwardTrend(string fromDate, string toDate)
     {
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
-
-        throw new NotImplementedException();
+        var longest = ListHelper.LongestConsecutiveDecreasingSubset(data.Select(x => x.Price).ToList());
+        return longest;
     }
 
     public async Task<TradeVolume> GetHighestTradingVolume(string fromDate, string toDate)
