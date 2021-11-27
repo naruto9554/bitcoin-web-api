@@ -1,4 +1,4 @@
-public class MarketData
+public class MarketChartPoint
 {
     public long Date { get; set; }
     public decimal Price { get; set; }
