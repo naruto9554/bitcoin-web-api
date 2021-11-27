@@ -22,7 +22,7 @@ public class MarketStore : IMarketStore
         var id = "bitcoin";
         var vs_currency = "eur";
         var from = DateHelper.DateToUnixTime(fromDate).ToString();
-        var to = DateHelper.DateToUnixTime(toDate).ToString();
+        var to = (DateHelper.DateToUnixTime(toDate) + 3600).ToString();
 
         var parameters = new List<KeyValuePair<string, string>>();
         parameters.Add(new KeyValuePair<string, string>(nameof(vs_currency), vs_currency));
