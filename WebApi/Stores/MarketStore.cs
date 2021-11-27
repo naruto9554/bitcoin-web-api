@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -18,17 +17,17 @@ public class MarketStore : IMarketStore
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<List<MarketChartPoint>> GetMarketChartByDateRange(string fromDate, string toDate)
+    public async Task<List<MarketChartPoint>?> GetMarketChartByDateRange(string fromDate, string toDate)
     {
         var id = "bitcoin";
         var vs_currency = "eur";
         var from = DateHelper.DateToUnixTime(fromDate).ToString();
         var to = (DateHelper.DateToUnixTime(toDate) + 3600).ToString();
 
-        var parameters = new List<KeyValuePair<string, string>>();
-        parameters.Add(new KeyValuePair<string, string>(nameof(vs_currency), vs_currency));
-        parameters.Add(new KeyValuePair<string, string>(nameof(from), from));
-        parameters.Add(new KeyValuePair<string, string>(nameof(to), to));
+        var parameters = new List<KeyValuePair<string, string?>>();
+        parameters.Add(new KeyValuePair<string, string?>(nameof(vs_currency), vs_currency));
+        parameters.Add(new KeyValuePair<string, string?>(nameof(from), from));
+        parameters.Add(new KeyValuePair<string, string?>(nameof(to), to));
 
         var query = QueryString.Create(parameters);
         var url = $"{BaseUrl}/coins/{id}/market_chart/range{query.Value}";
@@ -42,13 +41,14 @@ public class MarketStore : IMarketStore
                 var json = await response.Content.ReadAsStringAsync();
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 var marketChart = JsonSerializer.Deserialize<MarketChart>(json, options);
-                var data = MarketDataMapper.MapMarketChartToMarketChartPoints(marketChart);
-                if (data.Any())
+
+                if (marketChart == null)
                 {
-                    _logger.LogInformation($"Successfully found market chart data. Points {data.Count}");
-                    return data;
+                    return null;
                 }
-                _logger.LogInformation($"Market chart data not found");
+
+                var data = MarketDataMapper.MapMarketChartToMarketChartPoints(marketChart);
+                _logger.LogInformation($"Successfully found market chart data. Points {data.Count}");
                 return data;
             }
 

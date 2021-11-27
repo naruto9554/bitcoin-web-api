@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -40,18 +41,24 @@ app.UseHttpsRedirection();
 // Routes
 app.MapGet("/longestdownwardtrend", async (IMarketService service, string fromDate, string toDate) =>
 {
-    return await service.GetLongestDownwardTrend(fromDate, toDate);
+    var result = await service.GetLongestDownwardTrend(fromDate, toDate);
+    if (result == null) return Results.NotFound();
+    return Results.Ok(result);
 });
 
 app.MapGet("/highestradingvolume", async (IMarketService service, string fromDate, string toDate) =>
 {
-    return await service.GetHighestTradingVolume(fromDate, toDate);
+    var result = await service.GetHighestTradingVolume(fromDate, toDate);
+    if (result == null) return Results.NotFound();
+    return Results.Ok(result);
 });
 
 
 app.MapGet("/buyandsell", async (IMarketService service, string fromDate, string toDate) =>
 {
-    return await service.GetBestBuyAndSellDates(fromDate, toDate);
+    var result = await service.GetBestBuyAndSellDates(fromDate, toDate);
+    if (result == null) return Results.NotFound();
+    return Results.Ok(result);
 });
 
 app.Run();

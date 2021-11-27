@@ -5,6 +5,11 @@ public static class MarketDataMapper
 {
     public static List<MarketChartPoint> MapMarketChartToMarketChartPoints(MarketChart marketChart)
     {
+        if (marketChart.Prices == null || marketChart.Market_caps == null || marketChart.Total_volumes == null)
+        {
+            throw new ArgumentNullException();
+        }
+
         if (marketChart.Prices.Length != marketChart.Market_caps.Length &&
             marketChart.Prices.Length != marketChart.Total_volumes.Length)
         {

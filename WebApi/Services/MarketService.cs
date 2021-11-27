@@ -13,17 +13,26 @@ public class MarketService : IMarketService
         _marketStore = marketStore;
     }
 
-    public async Task<int> GetLongestDownwardTrend(string fromDate, string toDate)
+    public async Task<int?> GetLongestDownwardTrend(string fromDate, string toDate)
     {
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
+
+        if (data == null) return null;
+
         var longestDownwardPrice = ListHelper.LongestConsecutiveDecreasingSubset(data.Select(x => x.Price).ToList());
         return longestDownwardPrice;
     }
 
-    public async Task<TradeVolume> GetHighestTradingVolume(string fromDate, string toDate)
+    public async Task<TradeVolume?> GetHighestTradingVolume(string fromDate, string toDate)
     {
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
+
+        if (data == null) return null;
+
         var highestByTotalVolume = data.MaxBy(x => x.TotalVolume);
+
+        if (highestByTotalVolume == null) return null;
+
         return new TradeVolume
         {
             Date = DateHelper.DateTimeOffsetToDate(highestByTotalVolume.Date),
@@ -31,23 +40,20 @@ public class MarketService : IMarketService
         };
     }
 
-    public async Task<TradeDate> GetBestBuyAndSellDates(string fromDate, string toDate)
+    public async Task<TradeDate?> GetBestBuyAndSellDates(string fromDate, string toDate)
     {
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
 
+        if (data == null) return null;
+
         var priceIsOnlyDecreasing = ListHelper.IsOnlyDecreasing(data.Select(x => x.Price).ToList());
 
-        if (priceIsOnlyDecreasing)
-        {
-            return new TradeDate
-            {
-                SellDate = null,
-                BuyDate = null,
-            };
-        }
+        if (priceIsOnlyDecreasing) return null;
 
         var lowestByPrice = data.MinBy(x => x.Price);
         var highestByPrice = data.MaxBy(x => x.Price);
+
+        if (lowestByPrice == null || highestByPrice == null) return null;
 
         return new TradeDate
         {
