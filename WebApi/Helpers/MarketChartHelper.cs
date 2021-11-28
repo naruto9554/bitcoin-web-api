@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public static class MarketChartHelper
 {
@@ -27,5 +28,41 @@ public static class MarketChartHelper
             marketChartPoints.Add(marketData);
         }
         return marketChartPoints;
+    }
+
+    public static List<MarketChartPoint> GetEarliestMarketChartPointsByDate(List<MarketChartPoint> marketChartPoints)
+    {
+        var grouped = marketChartPoints.GroupBy(x => new
+        { y = x.Date.Year, m = x.Date.Month, d = x.Date.Day }).Select(x => new
+        {
+            Date = x.Key,
+            Data = x.Select(y => new MarketChartPoint
+            {
+                Date = y.Date,
+                Price = y.Price,
+                MarketCap = y.MarketCap,
+                TotalVolume = y.TotalVolume,
+            }).ToList(),
+        }).ToList();
+
+        var earliestMarketChartPoints = grouped.Select(x =>
+        {
+            var earliest = x.Data.MinBy(y => y.Date);
+
+            if (earliest == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            return new MarketChartPoint
+            {
+                Date = earliest.Date,
+                Price = earliest.Price,
+                MarketCap = earliest.MarketCap,
+                TotalVolume = earliest.TotalVolume,
+            };
+        }).ToList();
+
+        return earliestMarketChartPoints;
     }
 }

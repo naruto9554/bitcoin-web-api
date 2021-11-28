@@ -49,7 +49,8 @@ public class MarketStore : IMarketStore
                     return null;
                 }
 
-                var data = MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart);
+                var points = MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart);
+                var data = MarketChartHelper.GetEarliestMarketChartPointsByDate(points);
                 _logger.LogInformation($"Successfully found market chart data. Points {data.Count}");
                 return data;
             }
