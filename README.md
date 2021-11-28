@@ -16,7 +16,7 @@ cd WebApi
 dotnet watch run
 ```
 
-# Testing - TODO
+# Testing
 
 ```cmd
 cd Tests
