@@ -46,12 +46,13 @@ public class MarketStore : IMarketStore
 
                 if (marketChart == null)
                 {
+                    _logger.LogInformation("Market chart data not found.");
                     return null;
                 }
 
                 var points = MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart);
                 var data = MarketChartHelper.GetEarliestMarketChartPointsByDate(points);
-                _logger.LogInformation($"Successfully found market chart data. Points {data.Count}");
+                _logger.LogInformation($"Successfully found market chart data. Points {data.Count}.");
                 return data;
             }
 

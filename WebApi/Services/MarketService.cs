@@ -15,16 +15,19 @@ public class MarketService : IMarketService
 
     public async Task<int?> GetLongestDownwardTrend(string fromDate, string toDate)
     {
+        _logger.LogInformation($"Getting longest downward trend for price from {fromDate} to {toDate}");
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
 
         if (data == null) return null;
 
-        var longestDownwardPrice = ListHelper.LongestConsecutiveDecreasingSubset(data.Select(x => x.Price).ToList());
-        return longestDownwardPrice;
+        var longestDownwardPriceTrend = ListHelper.LongestConsecutiveDecreasingSubset(data.Select(x => x.Price).ToList());
+        _logger.LogInformation($"Longest downward price trend {longestDownwardPriceTrend} days.");
+        return longestDownwardPriceTrend;
     }
 
     public async Task<TradeVolume?> GetHighestTradingVolume(string fromDate, string toDate)
     {
+        _logger.LogInformation($"Getting highest trading volume and date from {fromDate} to {toDate}");
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
 
         if (data == null) return null;
@@ -33,15 +36,19 @@ public class MarketService : IMarketService
 
         if (highestByTotalVolume == null) return null;
 
-        return new TradeVolume
+        var tradeVolume = new TradeVolume
         {
             Date = DateHelper.DateTimeOffsetToDate(highestByTotalVolume.Date),
             Volume = highestByTotalVolume.TotalVolume,
         };
+
+        _logger.LogInformation($"Highest trade volume {tradeVolume.Volume} on {tradeVolume.Date}.");
+        return tradeVolume;
     }
 
     public async Task<TradeDate?> GetBestBuyAndSellDates(string fromDate, string toDate)
     {
+        _logger.LogInformation($"Getting best buy and sell dates from {fromDate} to {toDate}");
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
 
         if (data == null) return null;
@@ -55,10 +62,13 @@ public class MarketService : IMarketService
 
         if (lowestByPrice == null || highestByPrice == null) return null;
 
-        return new TradeDate
+        var tradeDate = new TradeDate
         {
             SellDate = DateHelper.DateTimeOffsetToDate(highestByPrice.Date),
             BuyDate = DateHelper.DateTimeOffsetToDate(lowestByPrice.Date),
         };
+
+        _logger.LogInformation($"Best buy date {tradeDate.BuyDate} and best sell date {tradeDate.SellDate}.");
+        return tradeDate;
     }
 }
