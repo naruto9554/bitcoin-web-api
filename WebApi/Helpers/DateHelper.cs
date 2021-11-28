@@ -3,9 +3,9 @@ using System.Globalization;
 
 public static class DateHelper
 {
-    public static long DateToUnixTime(string date)
+    public static long DateToUnixTime(string datetime)
     {
-        var dtOffset = DateTimeOffset.Parse(date, CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal);
+        var dtOffset = DateTimeOffset.Parse(datetime, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
         return dtOffset.ToUnixTimeSeconds();
     }
 

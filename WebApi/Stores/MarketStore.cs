@@ -21,8 +21,10 @@ public class MarketStore : IMarketStore
     {
         var id = "bitcoin";
         var vs_currency = "eur";
-        var from = DateHelper.DateToUnixTime(fromDate).ToString();
-        var to = (DateHelper.DateToUnixTime(toDate) + 3600).ToString();
+
+        var datetimeSuffix = "T00:00:00.000";
+        var from = DateHelper.DateToUnixTime(fromDate + datetimeSuffix).ToString();
+        var to = (DateHelper.DateToUnixTime(toDate + datetimeSuffix) + 3600).ToString();
 
         var parameters = new List<KeyValuePair<string, string?>>();
         parameters.Add(new KeyValuePair<string, string?>(nameof(vs_currency), vs_currency));
@@ -47,7 +49,7 @@ public class MarketStore : IMarketStore
                     return null;
                 }
 
-                var data = MarketDataMapper.MapMarketChartToMarketChartPoints(marketChart);
+                var data = MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart);
                 _logger.LogInformation($"Successfully found market chart data. Points {data.Count}");
                 return data;
             }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-public static class MarketDataMapper
+public static class MarketChartHelper
 {
     public static List<MarketChartPoint> MapMarketChartToMarketChartPoints(MarketChart marketChart)
     {
