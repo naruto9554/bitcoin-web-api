@@ -6,9 +6,19 @@ public static class MarketChartHelper
 {
     public static List<MarketChartPoint> MapMarketChartToMarketChartPoints(MarketChart marketChart)
     {
-        if (marketChart.Prices == null || marketChart.Market_caps == null || marketChart.Total_volumes == null)
+        if (marketChart.Prices == null)
         {
-            throw new ArgumentNullException();
+            throw new ArgumentNullException(nameof(marketChart.Prices));
+        }
+
+        if (marketChart.Market_caps == null)
+        {
+            throw new ArgumentNullException(nameof(marketChart.Market_caps));
+        }
+
+        if (marketChart.Total_volumes == null)
+        {
+            throw new ArgumentNullException(nameof(marketChart.Total_volumes));
         }
 
         if (marketChart.Prices.Length != marketChart.Market_caps.Length &&
@@ -51,7 +61,7 @@ public static class MarketChartHelper
 
             if (earliest == null)
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(earliest));
             }
 
             return new MarketChartPoint
