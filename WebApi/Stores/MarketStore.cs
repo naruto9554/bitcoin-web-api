@@ -44,7 +44,7 @@ public class MarketStore : IMarketStore
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 var marketChart = JsonSerializer.Deserialize<MarketChart>(json, options);
 
-                if (marketChart == null)
+                if (marketChart == null || marketChart.Prices == null || marketChart.Prices.Length == 0)
                 {
                     _logger.LogInformation("Market chart data not found.");
                     return null;
