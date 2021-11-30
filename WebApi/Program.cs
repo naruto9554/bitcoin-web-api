@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,8 +30,11 @@ var app = builder.Build();
 // Middleware
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseHttpsRedirection();
 
+if (app.Environment.EnvironmentName.ToLower().Contains("https"))
+{
+    app.UseHttpsRedirection();
+}
 
 // Routes
 app.MapGet("/longestdownwardtrend", async (IMarketService service, string fromDate, string toDate) =>
