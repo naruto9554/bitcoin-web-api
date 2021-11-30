@@ -26,8 +26,10 @@ dotnet watch run
 
 ## Use application
 
-Use API locally with built-in [Swagger](https://localhost:5555/swagger)
+Use API [locally](https://localhost:5000/swagger) or hosted on [Heroku](https://bitcoin-web-api.herokuapp.com/swagger) with built-in Swagger
 or with any suitable tool of your choice.
+
+Input date format: `yyyy-MM-dd`
 
 ### Endpoints:
 
