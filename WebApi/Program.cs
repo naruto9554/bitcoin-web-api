@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +32,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-if (app.Environment.EnvironmentName.ToLower().Contains("https"))
+if (app.Environment.IsProduction())
 {
     app.UseHttpsRedirection();
 }
