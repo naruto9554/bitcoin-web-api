@@ -9,10 +9,10 @@ RUN dotnet publish -c release -o /app
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
-COPY --from=build /app/ ./
+COPY --from=build /app .
 
-# For local
+# Local
 ENTRYPOINT ["dotnet", "WebApi.dll"]
 
-# For Heroku
+# Heroku
 # CMD ASPNETCORE_URLS=http://*:$PORT dotnet WebApi.dll
