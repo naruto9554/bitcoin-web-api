@@ -3,4 +3,4 @@
 .vscode
 *.pdf
 .dockerignore
-docker-compose*
+.env
