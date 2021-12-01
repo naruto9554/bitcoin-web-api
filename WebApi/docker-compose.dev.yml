@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  webapi:
+    image: webapi
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - 5000:80
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://*:80
+      ASPNETCORE_HTTPS_PORT: 443

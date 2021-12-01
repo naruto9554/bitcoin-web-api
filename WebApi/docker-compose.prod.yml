@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  webapi:
+    image: webapi
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - 5001:443
+      - 5000:80
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://*:80;https://*:443"
+      ASPNETCORE_HTTPS_PORT: 443
+      ASPNETCORE_Kestrel__Certificates__Default__Password: ${CERTIFICATE_PASSWORD}
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/webapi.pfx
+    volumes:
+      - ~/.aspnet/https:/https
