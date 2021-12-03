@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Json;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -20,6 +21,7 @@ builder.Services.Configure<JsonOptions>(opt =>
     serializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.Never;
     serializerOptions.PropertyNameCaseInsensitive = true;
 });
+builder.Services.Configure<KestrelServerOptions>(opt => { opt.AddServerHeader = false; });
 
 // Services
 builder.Services.AddHttpClient();
