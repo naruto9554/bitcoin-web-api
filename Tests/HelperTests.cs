@@ -6,43 +6,52 @@ using Xunit;
 public class HelperTests
 {
     [Fact]
-    public void ASD()
+    public void LongestConsecutiveDecreasingSubset()
     {
+        var numberOfDays = 10;
         var now = DateTimeOffset.UtcNow;
         var marketChartPoints = new List<MarketChartPoint>();
 
-        for (var i = 0; i < 3; i++)
+        var price = new Random().Next(0, Int32.MaxValue);
+
+        marketChartPoints.Add(new MarketChartPoint
+        {
+            Date = now,
+            Price = price,
+            MarketCap = new Random().Next(),
+            TotalVolume = new Random().Next(),
+        });
+
+        for (var i = 1; i <= numberOfDays; i++)
         {
             marketChartPoints.Add(new MarketChartPoint
             {
                 Date = now.AddDays(i),
-                Price = 1000 + i,
+                Price = price - i,
                 MarketCap = new Random().Next(),
                 TotalVolume = new Random().Next(),
             });
         }
 
-        for (var i = 1; i < 5; i++)
+        marketChartPoints.Add(new MarketChartPoint
         {
-            marketChartPoints.Add(new MarketChartPoint
-            {
-                Date = now.AddDays(i),
-                Price = 1000 - i,
-                MarketCap = new Random().Next(),
-                TotalVolume = new Random().Next(),
-            });
-        }
+            Date = now.AddDays(numberOfDays + 1),
+            Price = price + 1,
+            MarketCap = new Random().Next(),
+            TotalVolume = new Random().Next(),
+        });
 
         var prices = marketChartPoints.Select(x => x.Price).ToList();
         var longest = ListHelper.LongestConsecutiveDecreasingSubset(prices);
 
-        Assert.Equal(4, longest);
+        Assert.Equal(numberOfDays + 2, prices.Count);
+        Assert.Equal(numberOfDays, longest);
     }
 
     [Fact]
     public void EarliestMarketChartPointsFound()
     {
-        var numberOfDays = 5;
+        var numberOfDays = 10;
         var now = DateTimeOffset.UtcNow;
         var marketChartPoints = new List<MarketChartPoint>();
         for (var i = 1; i < 24 * numberOfDays; i++)
