@@ -43,14 +43,14 @@ if (app.Environment.IsProduction())
 app.MapGet("/longestdownwardtrend", async (IMarketService service, string fromDate, string toDate) =>
 {
     var result = await service.GetLongestDownwardTrend(fromDate, toDate);
-    if (result == null) return Results.NotFound();
+    if (result is null) return Results.NotFound();
     return Results.Ok(result);
 });
 
 app.MapGet("/highestradingvolume", async (IMarketService service, string fromDate, string toDate) =>
 {
     var result = await service.GetHighestTradingVolume(fromDate, toDate);
-    if (result == null) return Results.NotFound();
+    if (result is null) return Results.NotFound();
     return Results.Ok(result);
 });
 
@@ -58,7 +58,7 @@ app.MapGet("/highestradingvolume", async (IMarketService service, string fromDat
 app.MapGet("/buyandsell", async (IMarketService service, string fromDate, string toDate) =>
 {
     var result = await service.GetBestBuyAndSellDates(fromDate, toDate);
-    if (result == null) return Results.NotFound();
+    if (result is null) return Results.NotFound();
     return Results.Ok(result);
 });
 

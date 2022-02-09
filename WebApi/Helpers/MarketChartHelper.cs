@@ -6,17 +6,17 @@ public static class MarketChartHelper
 {
     public static List<MarketChartPoint> MapMarketChartToMarketChartPoints(MarketChart marketChart)
     {
-        if (marketChart.Prices == null)
+        if (marketChart.Prices is null)
         {
             throw new ArgumentNullException(nameof(marketChart.Prices));
         }
 
-        if (marketChart.Market_caps == null)
+        if (marketChart.Market_caps is null)
         {
             throw new ArgumentNullException(nameof(marketChart.Market_caps));
         }
 
-        if (marketChart.Total_volumes == null)
+        if (marketChart.Total_volumes is null)
         {
             throw new ArgumentNullException(nameof(marketChart.Total_volumes));
         }
@@ -59,7 +59,7 @@ public static class MarketChartHelper
         {
             var earliest = x.Data.MinBy(y => y.Date);
 
-            if (earliest == null)
+            if (earliest is null)
             {
                 throw new ArgumentNullException(nameof(earliest));
             }

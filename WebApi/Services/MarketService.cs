@@ -18,7 +18,7 @@ public class MarketService : IMarketService
         _logger.LogInformation($"Getting longest downward trend for price from {fromDate} to {toDate}");
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
 
-        if (data == null) return null;
+        if (data is null) return null;
 
         var longestDownwardPriceTrend = ListHelper.LongestConsecutiveDecreasingSubset(data.Select(x => x.Price).ToList());
         _logger.LogInformation($"Longest downward price trend {longestDownwardPriceTrend} days.");
@@ -30,11 +30,11 @@ public class MarketService : IMarketService
         _logger.LogInformation($"Getting highest trading volume and date from {fromDate} to {toDate}");
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
 
-        if (data == null) return null;
+        if (data is null) return null;
 
         var highestByTotalVolume = data.MaxBy(x => x.TotalVolume);
 
-        if (highestByTotalVolume == null) return null;
+        if (highestByTotalVolume is null) return null;
 
         var tradeVolume = new TradeVolume
         {
@@ -51,7 +51,7 @@ public class MarketService : IMarketService
         _logger.LogInformation($"Getting best buy and sell dates from {fromDate} to {toDate}");
         var data = await _marketStore.GetMarketChartByDateRange(fromDate, toDate);
 
-        if (data == null) return null;
+        if (data is null) return null;
 
         var priceIsOnlyDecreasing = ListHelper.IsOnlyDecreasing(data.Select(x => x.Price).ToList());
 
@@ -60,7 +60,7 @@ public class MarketService : IMarketService
         var lowestByPrice = data.MinBy(x => x.Price);
         var highestByPrice = data.MaxBy(x => x.Price);
 
-        if (lowestByPrice == null || highestByPrice == null) return null;
+        if (lowestByPrice is null || highestByPrice is null) return null;
 
         var tradeDate = new TradeDate
         {
