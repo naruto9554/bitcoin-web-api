@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;
@@ -71,8 +72,8 @@ public class MarketServiceTests
     {
         var result = await _marketService.GetLongestDownwardTrend(FromDate, ToDate);
 
-        Assert.NotNull(result);
-        Assert.Equal(3, result);
+        result.Should().NotBeNull();
+        result.Should().Be(3);
     }
 
     [Fact]
@@ -80,11 +81,11 @@ public class MarketServiceTests
     {
         var result = await _marketService.GetHighestTradingVolume(FromDate, ToDate);
 
-        Assert.NotNull(result);
-        Assert.NotNull(result?.Date);
-        Assert.NotNull(result?.Volume);
-        Assert.Equal("2021-01-05", result?.Date);
-        Assert.Equal(500m, result?.Volume);
+        result.Should().NotBeNull();
+        result?.Date.Should().NotBeNull();
+        result?.Volume.Should().NotBeNull();
+        result?.Date.Should().Be("2021-01-05");
+        result?.Volume.Should().Be(500m);
     }
 
     [Fact]
@@ -92,10 +93,10 @@ public class MarketServiceTests
     {
         var result = await _marketService.GetBestBuyAndSellDates(FromDate, ToDate);
 
-        Assert.NotNull(result);
-        Assert.NotNull(result?.BuyDate);
-        Assert.NotNull(result?.SellDate);
-        Assert.Equal("2021-01-04", result?.BuyDate);
-        Assert.Equal("2021-01-05", result?.SellDate);
+        result.Should().NotBeNull();
+        result?.BuyDate.Should().NotBeNull();
+        result?.SellDate.Should().NotBeNull();
+        result?.BuyDate.Should().Be("2021-01-04");
+        result?.SellDate.Should().Be("2021-01-05");
     }
 }

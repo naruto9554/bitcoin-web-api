@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using Xunit;
 
 public class HelperTests
@@ -44,8 +45,9 @@ public class HelperTests
         var prices = marketChartPoints.Select(x => x.Price).ToList();
         var longest = ListHelper.LongestConsecutiveDecreasingSubset(prices);
 
-        Assert.Equal(numberOfDays + 2, prices.Count);
-        Assert.Equal(numberOfDays, longest);
+        prices.Should().NotBeEmpty();
+        prices.Count.Should().Be(numberOfDays + 2);
+        longest.Should().Be(numberOfDays);
     }
 
     [Fact]
@@ -67,13 +69,14 @@ public class HelperTests
 
         var result = MarketChartHelper.GetEarliestMarketChartPointsByDate(marketChartPoints);
 
+        result.Should().NotBeEmpty();
         if (now.TimeOfDay.Ticks == 0)
         {
-            Assert.Equal(numberOfDays, result.Count);
+            result.Count.Should().Be(numberOfDays);
         }
         else
         {
-            Assert.Equal(numberOfDays + 1, result.Count);
+            result.Count.Should().Be(numberOfDays + 1);
         }
     }
 }
