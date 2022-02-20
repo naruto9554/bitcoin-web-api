@@ -1,65 +1,10 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Json;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Options
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.Configure<JsonOptions>(opt =>
-{
-    var serializerOptions = opt.SerializerOptions;
-    serializerOptions.WriteIndented = true;
-    serializerOptions.IncludeFields = true;
-    serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-    serializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.Never;
-    serializerOptions.PropertyNameCaseInsensitive = true;
-});
-builder.Services.Configure<KestrelServerOptions>(opt => { opt.AddServerHeader = false; });
-
-// Services
-builder.Services.AddHttpClient();
-builder.Services.AddScoped<IMarketStore, MarketStore>();
-builder.Services.AddScoped<IMarketService, MarketService>();
+builder.Services.ConfigureServices();
 
 var app = builder.Build();
-
-// Middleware
-app.UseSwagger();
-app.UseSwaggerUI();
-
-if (app.Environment.IsProduction())
-{
-    app.UseHttpsRedirection();
-}
-
-// Routes
-app.MapGet("/longestdownwardtrend", async (IMarketService service, string fromDate, string toDate) =>
-{
-    var result = await service.GetLongestDownwardTrend(fromDate, toDate);
-    if (result is null) return Results.NotFound();
-    return Results.Ok(result);
-});
-
-app.MapGet("/highestradingvolume", async (IMarketService service, string fromDate, string toDate) =>
-{
-    var result = await service.GetHighestTradingVolume(fromDate, toDate);
-    if (result is null) return Results.NotFound();
-    return Results.Ok(result);
-});
-
-
-app.MapGet("/buyandsell", async (IMarketService service, string fromDate, string toDate) =>
-{
-    var result = await service.GetBestBuyAndSellDates(fromDate, toDate);
-    if (result is null) return Results.NotFound();
-    return Results.Ok(result);
-});
+app.ConfigureMiddleware(app.Environment);
+app.MapEndpoints();
 
 app.Run();
