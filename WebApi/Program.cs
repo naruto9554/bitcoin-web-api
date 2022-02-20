@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.ConfigureServices();
+
+var startup = new Startup(builder.Configuration);
+startup.ConfigureServices(builder.Services);
 
 var app = builder.Build();
-app.ConfigureMiddleware(app.Environment);
+
+startup.Configure(app, app.Environment);
+
 app.MapEndpoints();
 
 app.Run();

@@ -4,12 +4,20 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-public static class Startup
+public class Startup
 {
-    public static IServiceCollection ConfigureServices(this IServiceCollection services)
+    public IConfigurationRoot Configuration { get; }
+
+    public Startup(IConfigurationRoot configuration)
+    {
+        Configuration = configuration;
+    }
+
+    public void ConfigureServices(IServiceCollection services)
     {
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
@@ -27,20 +35,16 @@ public static class Startup
         services.AddHttpClient();
         services.AddScoped<IMarketStore, MarketStore>();
         services.AddScoped<IMarketService, MarketService>();
-
-        return services;
     }
 
-    public static IApplicationBuilder ConfigureMiddleware(this IApplicationBuilder builder, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        builder.UseSwagger();
-        builder.UseSwaggerUI();
+        app.UseSwagger();
+        app.UseSwaggerUI();
 
         if (env.IsProduction())
         {
-            builder.UseHttpsRedirection();
+            app.UseHttpsRedirection();
         }
-
-        return builder;
     }
 }
