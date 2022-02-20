@@ -124,8 +124,6 @@ public class MarketServiceTests
         var result = await _marketService.GetHighestTradingVolume(FromDate, ToDate);
 
         result.Should().NotBeNull();
-        result?.Date.Should().NotBeNull();
-        result?.Volume.Should().NotBeNull();
         result?.Date.Should().Be("2021-01-05");
         result?.Volume.Should().Be(500m);
     }
@@ -144,8 +142,6 @@ public class MarketServiceTests
         var result = await _marketService.GetBestBuyAndSellDates(FromDate, ToDate);
 
         result.Should().NotBeNull();
-        result?.BuyDate.Should().NotBeNull();
-        result?.SellDate.Should().NotBeNull();
         result?.BuyDate.Should().Be("2021-01-04");
         result?.SellDate.Should().Be("2021-01-05");
     }

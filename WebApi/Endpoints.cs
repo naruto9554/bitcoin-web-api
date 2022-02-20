@@ -10,14 +10,21 @@ public static class Endpoints
         {
             var result = await service.GetLongestDownwardTrend(fromDate, toDate);
             if (result is null) return Results.NotFound();
-            return Results.Ok(result);
+            return Results.Ok(new
+            {
+                Days = result
+            });
         });
 
         endpoints.MapGet("/highestradingvolume", async (IMarketService service, string fromDate, string toDate) =>
         {
             var result = await service.GetHighestTradingVolume(fromDate, toDate);
             if (result is null) return Results.NotFound();
-            return Results.Ok(result);
+            return Results.Ok(new
+            {
+                Date = result?.Date,
+                Volume = result?.Volume,
+            });
         });
 
 
@@ -25,7 +32,11 @@ public static class Endpoints
         {
             var result = await service.GetBestBuyAndSellDates(fromDate, toDate);
             if (result is null) return Results.NotFound();
-            return Results.Ok(result);
+            return Results.Ok(new
+            {
+                SellDate = result?.SellDate,
+                BuyDate = result?.BuyDate,
+            });
         });
 
         return endpoints;
