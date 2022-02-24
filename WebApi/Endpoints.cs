@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Routing;
 
 public static class Endpoints
 {
-    public static IEndpointRouteBuilder MapEndpoints(this IEndpointRouteBuilder endpoints)
+    public static IEndpointRouteBuilder ConfigureEndpoints(this IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet("/longestdownwardtrend", async (IMarketService service, string fromDate, string toDate) =>
         {
