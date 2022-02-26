@@ -8,10 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: ["6.0.x"]
-        include-prerelease: true
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET ${{ matrix.dotnet-version }}
@@ -19,14 +15,20 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
         with:
+          dotnet-version: "6.0.x"
+          include-prerelease: true
           appdir: WebApi
       - name: Build
         run: dotnet build
         with:
+          dotnet-version: "6.0.x"
+          include-prerelease: true
           appdir: WebApi
       - name: Test
         run: dotnet test
         with:
+          dotnet-version: "6.0.x"
+          include-prerelease: true
           appdir: Tests
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
