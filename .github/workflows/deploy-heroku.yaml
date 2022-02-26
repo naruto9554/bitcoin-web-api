@@ -8,32 +8,29 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet: ["6.0.x"]
+        include-prerelease: true
+        app: WebApi
+        tests: Tests
     steps:
       - uses: actions/checkout@v2
-      - name: Setup .NET ${{ matrix.dotnet-version }}
+      - name: Setup .NET ${{ matrix.dotnet}}
         uses: actions/setup-dotnet@v1
-      - name: Install dependencies
-        run: dotnet restore
-        with:
-          dotnet-version: "6.0.x"
-          include-prerelease: true
-          appdir: WebApi
       - name: Build
-        run: dotnet build
+        run: dotnet build ${{ matrix.app }}
         with:
-          dotnet-version: "6.0.x"
-          include-prerelease: true
-          appdir: WebApi
+          dotnet-version: ${{ matrix.dotnet }}
       - name: Test
-        run: dotnet test
+        run: dotnet test ${{ matrix.tests }}
         with:
-          dotnet-version: "6.0.x"
-          include-prerelease: true
-          appdir: Tests
-      - uses: akhileshns/heroku-deploy@v3.12.12
+          dotnet-version: ${{ matrix.dotnet }}
+      - name: Deploy
+        uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY}}
           heroku_app_name: bitcoin-web-api
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
           usedocker: true
           appdir: WebApi
