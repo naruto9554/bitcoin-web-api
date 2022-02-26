@@ -12,7 +12,7 @@ WORKDIR /app
 COPY --from=build /app .
 
 # Local
-ENTRYPOINT ["dotnet", "WebApi.dll"]
+# ENTRYPOINT ["dotnet", "WebApi.dll"]
 
 # Heroku
-# CMD ASPNETCORE_URLS=http://*:$PORT dotnet WebApi.dll
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet WebApi.dll
