@@ -1,4 +1,4 @@
-name: test-and-deploy-heroku
+name: build-test-and-deploy-heroku
 
 on:
   push:
@@ -11,21 +11,20 @@ jobs:
     strategy:
       matrix:
         dotnet: ["6.0.x"]
-        include-prerelease: true
         app: WebApi
         tests: Tests
     steps:
       - uses: actions/checkout@v2
-      - name: Setup .NET ${{ matrix.dotnet}}
+      - name: Setup .NET ${{ matrix.dotnet }}
         uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+      - name: Restore dependencies
+        run: dotnet restore ${{ matrix.app }}
       - name: Build
         run: dotnet build ${{ matrix.app }}
-        with:
-          dotnet-version: ${{ matrix.dotnet }}
       - name: Test
         run: dotnet test ${{ matrix.tests }}
-        with:
-          dotnet-version: ${{ matrix.dotnet }}
       - name: Deploy
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
