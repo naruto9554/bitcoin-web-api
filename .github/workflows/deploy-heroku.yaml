@@ -1,4 +1,4 @@
-name: deploy-heroku
+name: test-and-deploy-heroku
 
 on:
   push:
@@ -8,8 +8,26 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+      strategy:
+      matrix:
+        dotnet-version: ['6.0.x' ]
+        include-prerelease: true
     steps:
       - uses: actions/checkout@v2
+      - name: Setup .NET ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v1
+      - name: Install dependencies
+        run: dotnet restore
+        with:
+          appdir: WebApi
+      - name: Build
+        run: dotnet build
+        with:
+          appdir: WebApi
+      - name: Test
+        run: dotnet test
+        with:
+          appdir: Tests
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
