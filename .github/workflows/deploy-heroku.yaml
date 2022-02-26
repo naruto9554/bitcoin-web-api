@@ -18,17 +18,11 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet }}
       - name: Restore dependencies
-        run: dotnet restore
-        with:
-          appdir: WebApi
+        run: dotnet restore WebApi
       - name: Build
-        run: dotnet build
-        with:
-          appdir: WebApi
+        run: dotnet build WebApi
       - name: Test
-        run: dotnet test
-        with:
-          appdir: Tests
+        run: dotnet test Tests
       - name: Deploy
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
