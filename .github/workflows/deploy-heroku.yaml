@@ -8,9 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-      strategy:
+    strategy:
       matrix:
-        dotnet-version: ['6.0.x' ]
+        dotnet-version: ["6.0.x"]
         include-prerelease: true
     steps:
       - uses: actions/checkout@v2
