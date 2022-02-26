@@ -13,15 +13,13 @@ API based on [GoinGecko's public API.](https://www.coingecko.com/en/api/document
 ## Run application
 
 ```cmd
-cd WebApi
-dotnet run
+dotnet run --project WebApi
 ```
 
 or
 
 ```cmd
-cd WebApi
-dotnet watch run
+dotnet watch run --project WebApi
 ```
 
 ## Use application
@@ -40,6 +38,5 @@ Input date format: `yyyy-MM-dd`
 ## Run tests
 
 ```cmd
-cd Tests
 dotnet test
 ```

@@ -17,14 +17,12 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ matrix.dotnet }}
-      - name: Restore app dependencies
-        run: dotnet restore WebApi
+      - name: Restore dependencies
+        run: dotnet restore
       - name: Build app
-        run: dotnet build WebApi
-      - name: Restore tests dependencies
-        run: dotnet restore Tests
+        run: dotnet build
       - name: Test
-        run: dotnet test Tests
+        run: dotnet test
       - name: Deploy
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
@@ -32,4 +30,3 @@ jobs:
           heroku_app_name: bitcoin-web-api
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           usedocker: true
-          appdir: WebApi
