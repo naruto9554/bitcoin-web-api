@@ -17,10 +17,12 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ matrix.dotnet }}
-      - name: Restore dependencies
+      - name: Restore app dependencies
         run: dotnet restore WebApi
-      - name: Build
+      - name: Build app
         run: dotnet build WebApi
+      - name: Restore tests dependencies
+        run: dotnet restore Tests
       - name: Test
         run: dotnet test Tests
       - name: Deploy
