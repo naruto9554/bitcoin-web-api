@@ -11,8 +11,8 @@ jobs:
     strategy:
       matrix:
         dotnet: ["6.0.x"]
-        app: WebApi
-        tests: Tests
+        app: "WebApi"
+        tests: "Tests"
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET ${{ matrix.dotnet }}
