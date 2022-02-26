@@ -6,11 +6,24 @@ API based on [GoinGecko's public API.](https://www.coingecko.com/en/api/document
 2. Which date has the highest trading volume?
 3. What are the best days to buy and sell?
 
-### Requirements
+Use API hosted on [Heroku](https://bitcoin-web-api.herokuapp.com/swagger) with built-in Swagger
+or with any suitable tool of your choice.
 
-- NET 6 SDK (Download [here](https://dotnet.microsoft.com/download/dotnet/6.0))
+Input date format: `yyyy-MM-dd`
 
-## Run application
+Endpoints:
+
+- /longestdownwardtrend
+- /highestradingvolume
+- /buyandsell
+
+## Development
+
+Requirements:
+
+- [.NET 6 SDK ](https://dotnet.microsoft.com/download/dotnet/6.0) installed
+
+Run API locally via dotnet
 
 ```cmd
 dotnet run --project WebApi
@@ -22,21 +35,28 @@ or
 dotnet watch run --project WebApi
 ```
 
-## Use application
-
-Use API [locally](https://localhost:5000/swagger) or hosted on [Heroku](https://bitcoin-web-api.herokuapp.com/swagger) with built-in Swagger
-or with any suitable tool of your choice.
-
-Input date format: `yyyy-MM-dd`
-
-### Endpoints:
-
-- /longestdownwardtrend
-- /highestradingvolume
-- /buyandsell
-
-## Run tests
+Run tests:
 
 ```cmd
 dotnet test
+```
+
+## Docker
+
+Build
+
+```cmd
+docker build -f Dockerfile.local -t webapi .
+```
+
+Run API locally via Docker
+
+```cmd
+docker-compose -f docker-compose.http.yml up
+```
+
+or
+
+```cmd
+docker-compose -f docker-compose.https.yml up
 ```
