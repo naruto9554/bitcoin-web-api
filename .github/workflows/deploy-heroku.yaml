@@ -11,8 +11,6 @@ jobs:
     strategy:
       matrix:
         dotnet: ["6.0.x"]
-        app: "WebApi"
-        tests: "Tests"
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET ${{ matrix.dotnet }}
@@ -20,11 +18,17 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet }}
       - name: Restore dependencies
-        run: dotnet restore ${{ matrix.app }}
+        run: dotnet restore
+        with:
+          appdir: WebApi
       - name: Build
-        run: dotnet build ${{ matrix.app }}
+        run: dotnet build
+        with:
+          appdir: WebApi
       - name: Test
-        run: dotnet test ${{ matrix.tests }}
+        run: dotnet test
+        with:
+          appdir: Tests
       - name: Deploy
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
