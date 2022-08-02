@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-public class MarketStore : IMarketStore
+public class MarketClient : IMarketClient
 {
     private const string BaseUrl = "https://api.coingecko.com/api/v3";
-    private readonly ILogger<MarketStore> _logger;
+    private readonly ILogger<MarketClient> _logger;
     private readonly IHttpClientFactory _httpClientFactory;
 
-    public MarketStore(ILogger<MarketStore> logger, IHttpClientFactory httpClientFactory)
+    public MarketClient(ILogger<MarketClient> logger, IHttpClientFactory httpClientFactory)
     {
         _logger = logger;
         _httpClientFactory = httpClientFactory;
@@ -39,7 +39,7 @@ public class MarketStore : IMarketStore
 
                 var points = MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart);
                 var data = MarketChartHelper.GetEarliestMarketChartPointsByDate(points);
-                _logger.LogInformation($"Successfully found market chart data. Points {data.Count}.");
+                _logger.LogInformation("Successfully found market chart data. Points: {count}", data.Count);
                 return data;
             }
 

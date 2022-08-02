@@ -90,15 +90,15 @@ public class MarketServiceTests
         ToDateExtension = DateHelper.DateTimeOffsetToDate(date.AddDays(7));
         ToDateNullExtension = DateHelper.DateTimeOffsetToDate(date.AddDays(10));
 
-        var marketStore = new Mock<IMarketStore>(MockBehavior.Strict);
-        marketStore.Setup(x => x.GetMarketChartByDateRange(FromDate, ToDate))
+        var marketClient = new Mock<IMarketClient>(MockBehavior.Strict);
+        marketClient.Setup(x => x.GetMarketChartByDateRange(FromDate, ToDate))
             .ReturnsAsync(marketChartPoints);
-        marketStore.Setup(x => x.GetMarketChartByDateRange(ToDate, ToDateExtension))
+        marketClient.Setup(x => x.GetMarketChartByDateRange(ToDate, ToDateExtension))
             .ReturnsAsync(marketChartPointsExtension);
-        marketStore.Setup(x => x.GetMarketChartByDateRange(ToDateExtension, ToDateNullExtension))
+        marketClient.Setup(x => x.GetMarketChartByDateRange(ToDateExtension, ToDateNullExtension))
             .ReturnsAsync(marketChartPointsNullExtension);
 
-        _marketService = new MarketService(logger, marketStore.Object);
+        _marketService = new MarketService(logger, marketClient.Object);
     }
 
     [Fact]

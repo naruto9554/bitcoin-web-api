@@ -7,7 +7,7 @@ using Xunit;
 public class HelperTests
 {
     [Fact]
-    public void LongestConsecutiveDecreasingSubset()
+    public void TestLongestConsecutiveDecreasingSubset()
     {
         var numberOfDays = 10;
         var now = DateTimeOffset.UtcNow;
@@ -43,7 +43,7 @@ public class HelperTests
         });
 
         var prices = marketChartPoints.Select(x => x.Price).ToList();
-        var longest = ListHelper.LongestConsecutiveDecreasingSubset(prices);
+        var longest = prices.LongestConsecutiveDecreasingSubset();
 
         prices.Should().NotBeEmpty();
         prices.Count.Should().Be(numberOfDays + 2);
@@ -51,7 +51,7 @@ public class HelperTests
     }
 
     [Fact]
-    public void EarliestMarketChartPointsFound()
+    public void TestEarliestMarketChartPointsFound()
     {
         var numberOfDays = 10;
         var now = DateTimeOffset.UtcNow;

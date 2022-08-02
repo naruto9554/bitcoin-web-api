@@ -33,7 +33,7 @@ public class Startup
         services.Configure<KestrelServerOptions>(opt => { opt.AddServerHeader = false; });
 
         services.AddHttpClient();
-        services.AddScoped<IMarketStore, MarketStore>();
+        services.AddScoped<IMarketClient, MarketClient>();
         services.AddScoped<IMarketService, MarketService>();
     }
 
