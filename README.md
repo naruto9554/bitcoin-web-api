@@ -21,7 +21,7 @@ Endpoints:
 
 Requirements:
 
-- [.NET 6 SDK ](https://dotnet.microsoft.com/download/dotnet/6.0) installed
+- [.NET 7 SDK ](https://dotnet.microsoft.com/download/dotnet/7.0) installed
 
 Run API locally via dotnet
 
