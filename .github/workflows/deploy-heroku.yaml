@@ -11,11 +11,8 @@ jobs:
     strategy:
       matrix:
         dotnet: ["7.0.x"]
-        node: [18]
     steps:
       - uses: actions/checkout@v3
-        with:
-          node-version: ${{ matrix.node }}
       - name: Setup .NET ${{ matrix.dotnet }}
         uses: actions/setup-dotnet@v3
         with:
