@@ -46,7 +46,7 @@ dotnet test
 Build
 
 ```cmd
-docker build -f Dockerfile.local -t webapi .
+docker build -f Dockerfile -t webapi .
 ```
 
 Run API locally via Docker
