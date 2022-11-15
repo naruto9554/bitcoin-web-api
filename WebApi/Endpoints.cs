@@ -14,6 +14,11 @@ public static class Endpoints
             {
                 Days = result
             });
+        })
+        .WithOpenApi(operation =>
+        {
+            operation.Summary = "Get longest downward trend in days between given dates";
+            return operation;
         });
 
         endpoints.MapGet("/highestradingvolume", async (IMarketService service, string fromDate, string toDate) =>
@@ -25,8 +30,12 @@ public static class Endpoints
                 Date = result?.Date,
                 Volume = result?.Volume,
             });
+        })
+        .WithOpenApi(operation =>
+        {
+            operation.Summary = "Get the date with the highest trading volume between given dates";
+            return operation;
         });
-
 
         endpoints.MapGet("/buyandsell", async (IMarketService service, string fromDate, string toDate) =>
         {
@@ -37,6 +46,11 @@ public static class Endpoints
                 SellDate = result?.SellDate,
                 BuyDate = result?.BuyDate,
             });
+        })
+        .WithOpenApi(operation =>
+        {
+            operation.Summary = "Get pair of dates when it is best to buy and sell between given dates";
+            return operation;
         });
 
         return endpoints;
