@@ -11,5 +11,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 COPY --from=build /app .
 
-# Heroku
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet WebApi.dll
+ENTRYPOINT ["dotnet", "WebApi.dll"]
