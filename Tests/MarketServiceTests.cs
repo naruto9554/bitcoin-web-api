@@ -85,10 +85,10 @@ public class MarketServiceTests
 
         var logger = new NullLogger<MarketService>();
 
-        FromDate = DateHelper.DateTimeOffsetToDate(date);
-        ToDate = DateHelper.DateTimeOffsetToDate(date.AddDays(4));
-        ToDateExtension = DateHelper.DateTimeOffsetToDate(date.AddDays(7));
-        ToDateNullExtension = DateHelper.DateTimeOffsetToDate(date.AddDays(10));
+        FromDate = date.ToString(Constants.DateFormat);
+        ToDate = date.AddDays(4).ToString(Constants.DateFormat);
+        ToDateExtension = date.AddDays(7).ToString(Constants.DateFormat);
+        ToDateNullExtension = date.AddDays(10).ToString(Constants.DateFormat);
 
         var marketClient = new Mock<IMarketClient>(MockBehavior.Strict);
         marketClient.Setup(x => x.GetMarketChartByDateRange(FromDate, ToDate))

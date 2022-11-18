@@ -31,7 +31,7 @@ public static class MarketChartHelper
         for (var i = 0; i < marketChart.Prices.Length; i++)
         {
             var marketData = new MarketChartPoint();
-            marketData.Date = DateHelper.UnixTimeToDateTimeOffset((long)marketChart.Prices[i][0]);
+            marketData.Date = DateTimeOffset.FromUnixTimeMilliseconds((long)marketChart.Prices[i][0]);
             marketData.Price = marketChart.Prices[i][1];
             marketData.MarketCap = marketChart.Market_caps[i][1];
             marketData.TotalVolume = marketChart.Total_volumes[i][1];

@@ -2,12 +2,11 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
 public class MarketClient : IMarketClient
 {
-    private const string BaseUrl = "https://api.coingecko.com/api/v3";
     private readonly ILogger<MarketClient> _logger;
     private readonly IHttpClientFactory _httpClientFactory;
 
@@ -19,7 +18,9 @@ public class MarketClient : IMarketClient
 
     public async Task<List<MarketChartPoint>?> GetMarketChartByDateRange(string fromDate, string toDate)
     {
-        var url = CreateRequestUrl(fromDate, toDate);
+        var baseUrl = $"https://api.coingecko.com/api/v3/coins/{Constants.CryptoCurrency}/market_chart/range";
+        var parameters = QueryHelper.CreateQueryParams(fromDate, toDate, Constants.Currency);
+        var url = QueryHelpers.AddQueryString(baseUrl, parameters);
         var request = new HttpRequestMessage(HttpMethod.Get, url);
 
         using (var httpClient = _httpClientFactory.CreateClient())
@@ -47,23 +48,5 @@ public class MarketClient : IMarketClient
             _logger.LogError("Error getting market chart data", exception);
             throw exception;
         }
-    }
-
-    private string CreateRequestUrl(string fromDate, string toDate)
-    {
-        var id = "bitcoin";
-        var vs_currency = "eur";
-
-        var datetimeSuffix = "T00:00:00.000";
-        var from = DateHelper.DateToUnixTime(fromDate + datetimeSuffix).ToString();
-        var to = (DateHelper.DateToUnixTime(toDate + datetimeSuffix) + 3600).ToString();
-
-        var parameters = new List<KeyValuePair<string, string?>>();
-        parameters.Add(new KeyValuePair<string, string?>(nameof(vs_currency), vs_currency));
-        parameters.Add(new KeyValuePair<string, string?>(nameof(from), from));
-        parameters.Add(new KeyValuePair<string, string?>(nameof(to), to));
-
-        var query = QueryString.Create(parameters);
-        return $"{BaseUrl}/coins/{id}/market_chart/range{query.Value}";
     }
 }

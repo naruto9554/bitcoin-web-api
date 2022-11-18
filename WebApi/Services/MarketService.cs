@@ -38,7 +38,7 @@ public class MarketService : IMarketService
         if (highestByTotalVolume is null) return null;
 
         var trade = (
-            Date: DateHelper.DateTimeOffsetToDate(highestByTotalVolume.Date),
+            Date: highestByTotalVolume.Date.ToString(Constants.DateFormat),
             Volume: highestByTotalVolume.TotalVolume
             );
 
@@ -64,8 +64,8 @@ public class MarketService : IMarketService
         if (lowestByPrice is null || highestByPrice is null) return null;
 
         var trade = (
-            SellDate: DateHelper.DateTimeOffsetToDate(highestByPrice.Date),
-            BuyDate: DateHelper.DateTimeOffsetToDate(lowestByPrice.Date)
+            SellDate: highestByPrice.Date.ToString(Constants.DateFormat),
+            BuyDate: lowestByPrice.Date.ToString(Constants.DateFormat)
         );
 
         _logger.LogInformation("Best buy date {buyDate} and best sell date {sellDate}.", trade.BuyDate, trade.SellDate);
