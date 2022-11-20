@@ -4,7 +4,7 @@ using System.Linq;
 using FluentAssertions;
 using Xunit;
 
-public class HelperTests
+public class UtilTests
 {
     [Fact]
     public void TestLongestConsecutiveDecreasingSubset()
