@@ -1,6 +1,6 @@
-public class MarketChart
+public record MarketChart
 {
-    public decimal[][]? Prices { get; set; }
-    public decimal[][]? Market_caps { get; set; }
-    public decimal[][]? Total_volumes { get; set; }
+    public decimal[][]? Prices { get; init; }
+    public decimal[][]? Market_caps { get; init; }
+    public decimal[][]? Total_volumes { get; init; }
 }
