@@ -26,13 +26,13 @@ Requirements:
 Run API locally via dotnet
 
 ```cmd
-dotnet run --project WebApi
+dotnet run --project Api
 ```
 
 or
 
 ```cmd
-dotnet watch run --project WebApi
+dotnet watch run --project Api
 ```
 
 Run tests:
@@ -46,7 +46,7 @@ dotnet test
 Build
 
 ```cmd
-docker build -f Dockerfile -t webapi .
+docker build -f Dockerfile -t api .
 ```
 
 Run API locally via Docker

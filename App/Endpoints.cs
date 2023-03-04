@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 
 public static class Endpoints
 {
@@ -23,8 +24,20 @@ public static class Endpoints
         .WithOpenApi(operation =>
         {
             operation.Summary = "Get longest downward trend in days between given dates";
-            operation.Parameters.First().Example = ExampleFromDate;
+            var schema = new OpenApiSchema
+            {
+                Example = new OpenApiString("2022-01-01"),
+                MinLength = 10,
+                MaxLength = 10,
+                Title = "title",
+                Type = "string",
+                Format = "date",
+                Pattern = @"^\d{4}-\d{2}-\d{2}",
+                Default = new OpenApiString("2022-01-01"),
+            };
+            operation.Parameters.First().Schema = schema;
             operation.Parameters.Last().Example = ExampleToDate;
+
             return operation;
         });
 
