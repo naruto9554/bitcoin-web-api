@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   webapi:
-    image: webapi
+    image: app
     ports:
       - 5001:443
       - 5000:80
@@ -11,6 +11,6 @@ services:
       ASPNETCORE_URLS: http://*:80;https://*:443"
       ASPNETCORE_HTTPS_PORT: 443
       ASPNETCORE_Kestrel__Certificates__Default__Password: ${CERTIFICATE_PASSWORD}
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/webapi.pfx
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/app.pfx
     volumes:
       - ~/.aspnet/https:/https

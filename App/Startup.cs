@@ -29,6 +29,7 @@ public class Startup
             serializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             serializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.Never;
             serializerOptions.PropertyNameCaseInsensitive = true;
+            serializerOptions.Converters.Add(new JsonStringEnumConverter());
         });
         services.Configure<KestrelServerOptions>(opt => { opt.AddServerHeader = false; });
 

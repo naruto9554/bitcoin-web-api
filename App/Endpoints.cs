@@ -24,20 +24,8 @@ public static class Endpoints
         .WithOpenApi(operation =>
         {
             operation.Summary = "Get longest downward trend in days between given dates";
-            var schema = new OpenApiSchema
-            {
-                Example = new OpenApiString("2022-01-01"),
-                MinLength = 10,
-                MaxLength = 10,
-                Title = "title",
-                Type = "string",
-                Format = "date",
-                Pattern = @"^\d{4}-\d{2}-\d{2}",
-                Default = new OpenApiString("2022-01-01"),
-            };
-            operation.Parameters.First().Schema = schema;
+            operation.Parameters.First().Example = ExampleFromDate;
             operation.Parameters.Last().Example = ExampleToDate;
-
             return operation;
         });
 
