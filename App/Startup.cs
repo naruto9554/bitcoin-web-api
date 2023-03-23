@@ -34,8 +34,7 @@ public class Startup
         services.Configure<KestrelServerOptions>(opt => { opt.AddServerHeader = false; });
 
         services.AddHttpClient();
-        services.AddScoped<IMarketClient, MarketClient>();
-        services.AddScoped<IMarketService, MarketService>();
+        services.AddDependencies();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
