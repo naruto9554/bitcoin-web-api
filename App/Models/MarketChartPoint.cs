@@ -1,6 +1,6 @@
 using System;
 
-public class MarketChartPoint
+public record MarketChartPoint
 {
     public DateTimeOffset Date { get; set; }
     public decimal Price { get; set; }
