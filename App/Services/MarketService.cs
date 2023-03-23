@@ -54,7 +54,7 @@ public class MarketService : IMarketService
         if (data is null) return null;
 
         var prices = data.Select(x => x.Price).ToList();
-        var priceIsOnlyDecreasing = prices.IsOnlyDecreasing();
+        var priceIsOnlyDecreasing = prices.IsOrderedDecreasing();
 
         if (priceIsOnlyDecreasing) return null;
 
