@@ -24,7 +24,7 @@ jobs:
       - name: Test
         run: dotnet test
       - name: Deploy
-        uses: akhileshns/heroku-deploy@v3.12.12
+        uses: akhileshns/heroku-deploy@v3.12.13
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY}}
           heroku_app_name: bitcoin-web-api
