@@ -45,7 +45,7 @@ public class MarketClient : IMarketClient
             }
 
             var exception = new HttpRequestException(response.StatusCode.ToString());
-            _logger.LogError("Error getting market chart data", exception);
+            _logger.LogError(exception, "Error getting market chart data");
             throw exception;
         }
     }
