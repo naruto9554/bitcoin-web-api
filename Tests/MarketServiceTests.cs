@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.Logging.Abstractions;
-using Moq;
+using NSubstitute;
 using Xunit;
 
 public class MarketServiceTests
@@ -20,36 +20,32 @@ public class MarketServiceTests
         var date = new DateTimeOffset(2021, 1, 1, 12, 0, 0, 0, new TimeSpan(0, 0, 0));
 
         var marketChartPoints = new List<MarketChartPoint> {
-            new MarketChartPoint
-            {
+            new() {
                 Date = date,
                 Price = 100m,
                 MarketCap = 100m,
                 TotalVolume = 100m,
             },
-            new MarketChartPoint
-            {
+            new() {
                 Date = date.AddDays(1),
                 Price = 90m,
                 MarketCap = 100m,
                 TotalVolume = 200m,
             },
-            new MarketChartPoint
+            new()
             {
                 Date = date.AddDays(2),
                 Price = 80m,
                 MarketCap = 100m,
                 TotalVolume = 300m,
             },
-                new MarketChartPoint
-            {
+            new() {
                 Date = date.AddDays(3),
                 Price = 70m,
                 MarketCap = 100m,
                 TotalVolume = 400m,
             },
-                new MarketChartPoint
-            {
+            new() {
                 Date = date.AddDays(4),
                 Price = 500m,
                 MarketCap = 100m,
@@ -58,22 +54,19 @@ public class MarketServiceTests
         };
 
         var marketChartPointsExtension = new List<MarketChartPoint> {
-            new MarketChartPoint
-            {
+            new() {
                 Date = date.AddDays(5),
                 Price = 50m,
                 MarketCap = 100m,
                 TotalVolume = 50m,
             },
-            new MarketChartPoint
-            {
+            new() {
                 Date = date.AddDays(6),
                 Price = 40m,
                 MarketCap = 100m,
                 TotalVolume = 40m,
             },
-            new MarketChartPoint
-            {
+            new() {
                 Date = date.AddDays(7),
                 Price = 30m,
                 MarketCap = 100m,
@@ -90,15 +83,15 @@ public class MarketServiceTests
         ToDateExtension = date.AddDays(7).ToString(Constants.DateFormat);
         ToDateNullExtension = date.AddDays(10).ToString(Constants.DateFormat);
 
-        var marketClient = new Mock<IMarketClient>(MockBehavior.Strict);
-        marketClient.Setup(x => x.GetMarketChartByDateRange(FromDate, ToDate))
-            .ReturnsAsync(marketChartPoints);
-        marketClient.Setup(x => x.GetMarketChartByDateRange(ToDate, ToDateExtension))
-            .ReturnsAsync(marketChartPointsExtension);
-        marketClient.Setup(x => x.GetMarketChartByDateRange(ToDateExtension, ToDateNullExtension))
-            .ReturnsAsync(marketChartPointsNullExtension);
+        var marketClient = Substitute.For<IMarketClient>();
+        marketClient.GetMarketChartByDateRange(FromDate, ToDate)!
+            .Returns(Task.FromResult(marketChartPoints));
+        marketClient.GetMarketChartByDateRange(ToDate, ToDateExtension)!
+            .Returns(Task.FromResult(marketChartPointsExtension));
+        marketClient.GetMarketChartByDateRange(ToDateExtension, ToDateNullExtension)
+            .Returns(Task.FromResult(marketChartPointsNullExtension));
 
-        _marketService = new MarketService(logger, marketClient.Object);
+        _marketService = new MarketService(logger, marketClient);
     }
 
     [Fact]
