@@ -78,10 +78,10 @@ public class MarketServiceTests
 
         var logger = new NullLogger<MarketService>();
 
-        FromDate = new DateOnly(date.Year, date.Month, date.Day);
-        ToDate = new DateOnly(date.Year, date.Month, date.Day).AddDays(4);
-        ToDateExtension = new DateOnly(date.Year, date.Month, date.Day).AddDays(7); ;
-        ToDateNullExtension = new DateOnly(date.Year, date.Month, date.Day).AddDays(10); ;
+        FromDate = date.ToDateOnly();
+        ToDate = date.AddDays(4).ToDateOnly();
+        ToDateExtension = date.AddDays(7).ToDateOnly();
+        ToDateNullExtension = date.AddDays(10).ToDateOnly();
 
         var marketClient = Substitute.For<IMarketClient>();
         marketClient.GetMarketChartByDateRange(FromDate, ToDate)!
@@ -117,7 +117,7 @@ public class MarketServiceTests
         var result = await _marketService.GetHighestTradingVolume(FromDate, ToDate);
 
         result.Should().NotBeNull();
-        result?.Date.Should().Be("2021-01-05");
+        result?.Date.Should().Be(new DateOnly(2021, 1, 5));
         result?.Volume.Should().Be(500m);
     }
 
@@ -135,8 +135,8 @@ public class MarketServiceTests
         var result = await _marketService.GetBestBuyAndSellDates(FromDate, ToDate);
 
         result.Should().NotBeNull();
-        result?.BuyDate.Should().Be("2021-01-04");
-        result?.SellDate.Should().Be("2021-01-05");
+        result?.BuyDate.Should().Be(new DateOnly(2021, 1, 4));
+        result?.SellDate.Should().Be(new DateOnly(2021, 1, 5));
     }
 
     [Fact]

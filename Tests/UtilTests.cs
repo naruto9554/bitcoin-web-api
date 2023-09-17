@@ -13,7 +13,7 @@ public class UtilTests
         var now = DateTimeOffset.UtcNow;
         var marketChartPoints = new List<MarketChartPoint>();
 
-        var price = new Random().Next(0, Int32.MaxValue);
+        var price = new Random().Next(0, int.MaxValue);
 
         marketChartPoints.Add(new MarketChartPoint
         {

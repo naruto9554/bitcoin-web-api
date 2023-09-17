@@ -27,7 +27,7 @@ public class MarketService : IMarketService
         return longestDownwardPriceTrend;
     }
 
-    public async Task<(string Date, decimal Volume)?> GetHighestTradingVolume(DateOnly fromDate, DateOnly toDate)
+    public async Task<(DateOnly Date, decimal Volume)?> GetHighestTradingVolume(DateOnly fromDate, DateOnly toDate)
     {
         _logger.LogInformation("Getting highest trading volume and date from {fromDate} to {toDate}", fromDate, toDate);
         var data = await _marketClient.GetMarketChartByDateRange(fromDate, toDate);
@@ -39,7 +39,7 @@ public class MarketService : IMarketService
         if (highestByTotalVolume is null) return null;
 
         var trade = (
-            Date: highestByTotalVolume.Date.ToString(Constants.DateFormat),
+            Date: highestByTotalVolume.Date.ToDateOnly(),
             Volume: highestByTotalVolume.TotalVolume
             );
 
@@ -47,7 +47,7 @@ public class MarketService : IMarketService
         return trade;
     }
 
-    public async Task<(string SellDate, string BuyDate)?> GetBestBuyAndSellDates(DateOnly fromDate, DateOnly toDate)
+    public async Task<(DateOnly SellDate, DateOnly BuyDate)?> GetBestBuyAndSellDates(DateOnly fromDate, DateOnly toDate)
     {
         _logger.LogInformation("Getting best buy and sell dates from {fromDate} to {toDate}", fromDate, toDate);
         var data = await _marketClient.GetMarketChartByDateRange(fromDate, toDate);
@@ -65,8 +65,8 @@ public class MarketService : IMarketService
         if (lowestByPrice is null || highestByPrice is null) return null;
 
         var trade = (
-            SellDate: highestByPrice.Date.ToString(Constants.DateFormat),
-            BuyDate: lowestByPrice.Date.ToString(Constants.DateFormat)
+            SellDate: highestByPrice.Date.ToDateOnly(),
+            BuyDate: lowestByPrice.Date.ToDateOnly()
         );
 
         _logger.LogInformation("Best buy date {buyDate} and best sell date {sellDate}.", trade.BuyDate, trade.SellDate);
