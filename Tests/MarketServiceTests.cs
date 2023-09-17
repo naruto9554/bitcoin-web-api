@@ -8,10 +8,10 @@ using Xunit;
 
 public class MarketServiceTests
 {
-    public readonly string FromDate;
-    public readonly string ToDate;
-    public readonly string ToDateExtension;
-    public readonly string ToDateNullExtension;
+    public readonly DateOnly FromDate;
+    public readonly DateOnly ToDate;
+    public readonly DateOnly ToDateExtension;
+    public readonly DateOnly ToDateNullExtension;
 
     public readonly IMarketService _marketService;
 
@@ -78,10 +78,10 @@ public class MarketServiceTests
 
         var logger = new NullLogger<MarketService>();
 
-        FromDate = date.ToString(Constants.DateFormat);
-        ToDate = date.AddDays(4).ToString(Constants.DateFormat);
-        ToDateExtension = date.AddDays(7).ToString(Constants.DateFormat);
-        ToDateNullExtension = date.AddDays(10).ToString(Constants.DateFormat);
+        FromDate = new DateOnly(date.Year, date.Month, date.Day);
+        ToDate = new DateOnly(date.Year, date.Month, date.Day).AddDays(4);
+        ToDateExtension = new DateOnly(date.Year, date.Month, date.Day).AddDays(7); ;
+        ToDateNullExtension = new DateOnly(date.Year, date.Month, date.Day).AddDays(10); ;
 
         var marketClient = Substitute.For<IMarketClient>();
         marketClient.GetMarketChartByDateRange(FromDate, ToDate)!

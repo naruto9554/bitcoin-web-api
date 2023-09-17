@@ -1,17 +1,18 @@
+using System;
 using System.Collections.Generic;
 
 public static class QueryHelper
 {
-    public static Dictionary<string, string?> CreateQueryParams(string fromDate, string toDate, string currency = "eur")
+    public static Dictionary<string, string?> CreateQueryParams(DateOnly fromDate, DateOnly toDate, string currency = "eur")
     {
-        var datetimeSuffix = "T00:00:00.000";
-        var from = DateHelper.DateToUnixTime(fromDate + datetimeSuffix).ToString();
-        var to = (DateHelper.DateToUnixTime(toDate + datetimeSuffix) + 3600).ToString();
-
-        var parameters = new Dictionary<string, string?>();
-        parameters.Add("vs_currency", currency);
-        parameters.Add("from", from);
-        parameters.Add("to", to);
+        var from = fromDate.ToUnixTimestamp().ToString();
+        var to = toDate.ToUnixTimestamp().ToString();
+        var parameters = new Dictionary<string, string?>
+        {
+            { "vs_currency", currency },
+            { "from", from },
+            { "to", to }
+        };
         return parameters;
     }
 }

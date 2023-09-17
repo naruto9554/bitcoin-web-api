@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -13,7 +14,7 @@ public class MarketService : IMarketService
         _marketClient = marketClient;
     }
 
-    public async Task<int?> GetLongestDownwardTrend(string fromDate, string toDate)
+    public async Task<int?> GetLongestDownwardTrend(DateOnly fromDate, DateOnly toDate)
     {
         _logger.LogInformation("Getting longest downward trend for price from {fromDate} to {toDate}", fromDate, toDate);
         var data = await _marketClient.GetMarketChartByDateRange(fromDate, toDate);
@@ -26,7 +27,7 @@ public class MarketService : IMarketService
         return longestDownwardPriceTrend;
     }
 
-    public async Task<(string Date, decimal Volume)?> GetHighestTradingVolume(string fromDate, string toDate)
+    public async Task<(string Date, decimal Volume)?> GetHighestTradingVolume(DateOnly fromDate, DateOnly toDate)
     {
         _logger.LogInformation("Getting highest trading volume and date from {fromDate} to {toDate}", fromDate, toDate);
         var data = await _marketClient.GetMarketChartByDateRange(fromDate, toDate);
@@ -46,7 +47,7 @@ public class MarketService : IMarketService
         return trade;
     }
 
-    public async Task<(string SellDate, string BuyDate)?> GetBestBuyAndSellDates(string fromDate, string toDate)
+    public async Task<(string SellDate, string BuyDate)?> GetBestBuyAndSellDates(DateOnly fromDate, DateOnly toDate)
     {
         _logger.LogInformation("Getting best buy and sell dates from {fromDate} to {toDate}", fromDate, toDate);
         var data = await _marketClient.GetMarketChartByDateRange(fromDate, toDate);

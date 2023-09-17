@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
@@ -16,7 +17,7 @@ public class MarketClient : IMarketClient
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<List<MarketChartPoint>?> GetMarketChartByDateRange(string fromDate, string toDate)
+    public async Task<List<MarketChartPoint>?> GetMarketChartByDateRange(DateOnly fromDate, DateOnly toDate)
     {
         var baseUrl = $"https://api.coingecko.com/api/v3/coins/{Constants.CryptoCurrency}/market_chart/range";
         var parameters = QueryHelper.CreateQueryParams(fromDate, toDate, Constants.Currency);
