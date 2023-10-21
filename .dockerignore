@@ -1,0 +1,10 @@
+.git
+.aws
+.github
+.vscode
+.gitignore
+.env
+**/Tests
+**/*.yml
+**/*.pdf
+README.md

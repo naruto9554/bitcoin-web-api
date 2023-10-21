@@ -2,5 +2,4 @@
 */obj/*
 .vscode
 *.pdf
-.dockerignore
 .env
