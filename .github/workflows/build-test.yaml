@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         os: ["ubuntu-latest", "windows-latest"]
-        dotnet: ["7.0.x"]
+        dotnet: ["8.0.x"]
     steps:
       - uses: actions/checkout@v4
       - name: Setup .NET ${{ matrix.dotnet }}

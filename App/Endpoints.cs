@@ -7,8 +7,8 @@ using Microsoft.OpenApi.Any;
 
 public static class Endpoints
 {
-    private static readonly OpenApiString ExampleFromDate = new OpenApiString("2022-01-01");
-    private static readonly OpenApiString ExampleToDate = new OpenApiString("2022-01-31");
+    private static readonly OpenApiString ExampleFromDate = new("2022-01-01");
+    private static readonly OpenApiString ExampleToDate = new("2022-01-31");
 
     public static IEndpointRouteBuilder ConfigureEndpoints(this IEndpointRouteBuilder endpoints)
     {

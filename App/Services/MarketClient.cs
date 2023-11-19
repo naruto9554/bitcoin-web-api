@@ -11,6 +11,8 @@ public class MarketClient : IMarketClient
     private readonly ILogger<MarketClient> _logger;
     private readonly IHttpClientFactory _httpClientFactory;
 
+    private readonly JsonSerializerOptions _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
     public MarketClient(ILogger<MarketClient> logger, IHttpClientFactory httpClientFactory)
     {
         _logger = logger;
@@ -30,8 +32,7 @@ public class MarketClient : IMarketClient
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                var marketChart = JsonSerializer.Deserialize<MarketChart>(json, options);
+                var marketChart = JsonSerializer.Deserialize<MarketChart>(json, _options);
 
                 if (marketChart is null || marketChart.Prices.IsNullOrEmpty())
                 {
