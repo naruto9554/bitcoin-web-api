@@ -12,3 +12,5 @@ startup.Configure(app, app.Environment);
 app.ConfigureEndpoints();
 
 app.Run();
+
+public partial class Program { } // Reference for tests
