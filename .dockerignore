@@ -1,10 +1,12 @@
 .git
-.aws
 .github
 .vscode
 .gitignore
 .env
+**/bin
+**/obj
 **/Tests
 **/*.yml
 **/*.pdf
+Dockerfile
 README.md
