@@ -2,18 +2,14 @@ using System.Collections.Generic;
 
 public static class ListExtensions
 {
-
-    public static bool IsNullOrEmpty<T>(this IList<T>? enumerable)
+    public static bool IsNullOrEmpty<T>(this IList<T>? list)
     {
-        return (enumerable is null || enumerable.Count == 0) ? true : false;
+        return list is null || list.Count == 0;
     }
 
     public static int LongestConsecutiveDecreasingSubset<T>(this IList<T>? list, IComparer<T>? comparer = null)
     {
-        if (comparer is null)
-        {
-            comparer = Comparer<T>.Default;
-        }
+        comparer ??= Comparer<T>.Default;
 
         var longest = 0;
         var counter = 0;
@@ -38,14 +34,11 @@ public static class ListExtensions
 
     public static bool IsOrderedDecreasing<T>(this IList<T>? list, IComparer<T>? comparer = null)
     {
-        if (comparer is null)
-        {
-            comparer = Comparer<T>.Default;
-        }
+        comparer ??= Comparer<T>.Default;
 
         if (list?.Count > 1)
         {
-            for (int i = 1; i < list.Count; i++)
+            for (var i = 1; i < list.Count; i++)
             {
                 if (comparer.Compare(list[i - 1], list[i]) < 0)
                 {

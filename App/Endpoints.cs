@@ -14,12 +14,26 @@ public static class Endpoints
     {
         endpoints.MapGet("/longestdownwardtrend", async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
         {
-            var result = await service.GetLongestDownwardTrend(fromDate, toDate);
-            if (result is null) return Results.NotFound();
-            return Results.Ok(new
+            try
             {
-                Days = result
-            });
+                var result = await service.GetLongestDownwardTrend(fromDate, toDate);
+                if (result is null)
+                {
+                    return Results.NotFound();
+                }
+                return Results.Ok(new
+                {
+                    Days = result
+                });
+            }
+            catch (System.Net.Http.HttpRequestException ex)
+            {
+                return Results.Problem(statusCode: (int?)ex.StatusCode);
+            }
+            catch (Exception)
+            {
+                return Results.Problem();
+            }
         })
         .WithOpenApi(operation =>
         {
@@ -31,13 +45,27 @@ public static class Endpoints
 
         endpoints.MapGet("/highestradingvolume", async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
         {
-            var result = await service.GetHighestTradingVolume(fromDate, toDate);
-            if (result is null) return Results.NotFound();
-            return Results.Ok(new
+            try
             {
-                Date = result?.Date,
-                Volume = result?.Volume,
-            });
+                var result = await service.GetHighestTradingVolume(fromDate, toDate);
+                if (result is null)
+                {
+                    return Results.NotFound();
+                }
+                return Results.Ok(new
+                {
+                    Date = result?.Date,
+                    Volume = result?.Volume,
+                });
+            }
+            catch (System.Net.Http.HttpRequestException ex)
+            {
+                return Results.Problem(statusCode: (int?)ex.StatusCode);
+            }
+            catch (Exception)
+            {
+                return Results.Problem();
+            }
         })
         .WithOpenApi(operation =>
         {
@@ -49,13 +77,27 @@ public static class Endpoints
 
         endpoints.MapGet("/buyandsell", async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
         {
-            var result = await service.GetBestBuyAndSellDates(fromDate, toDate);
-            if (result is null) return Results.NotFound();
-            return Results.Ok(new
+            try
             {
-                SellDate = result?.SellDate,
-                BuyDate = result?.BuyDate,
-            });
+                var result = await service.GetBestBuyAndSellDates(fromDate, toDate);
+                if (result is null)
+                {
+                    return Results.NotFound();
+                }
+                return Results.Ok(new
+                {
+                    SellDate = result?.SellDate,
+                    BuyDate = result?.BuyDate,
+                });
+            }
+            catch (System.Net.Http.HttpRequestException ex)
+            {
+                return Results.Problem(statusCode: (int?)ex.StatusCode);
+            }
+            catch (Exception)
+            {
+                return Results.Problem();
+            }
         })
         .WithOpenApi(operation =>
         {

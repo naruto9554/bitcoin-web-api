@@ -8,14 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-public class Startup
+public class Startup(IConfigurationRoot configuration)
 {
-    public IConfigurationRoot Configuration { get; }
-
-    public Startup(IConfigurationRoot configuration)
-    {
-        Configuration = configuration;
-    }
+    public IConfigurationRoot Configuration { get; } = configuration;
 
     public void ConfigureServices(IServiceCollection services)
     {

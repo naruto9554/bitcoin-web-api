@@ -30,11 +30,13 @@ public static class MarketChartHelper
         var marketChartPoints = new List<MarketChartPoint>();
         for (var i = 0; i < marketChart.Prices.Length; i++)
         {
-            var marketData = new MarketChartPoint();
-            marketData.Date = DateTimeOffset.FromUnixTimeMilliseconds((long)marketChart.Prices[i][0]);
-            marketData.Price = marketChart.Prices[i][1];
-            marketData.MarketCap = marketChart.Market_caps[i][1];
-            marketData.TotalVolume = marketChart.Total_volumes[i][1];
+            var marketData = new MarketChartPoint
+            {
+                Date = DateTimeOffset.FromUnixTimeMilliseconds((long)marketChart.Prices[i][0]),
+                Price = marketChart.Prices[i][1],
+                MarketCap = marketChart.Market_caps[i][1],
+                TotalVolume = marketChart.Total_volumes[i][1]
+            };
             marketChartPoints.Add(marketData);
         }
         return marketChartPoints;

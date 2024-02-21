@@ -6,18 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
-public class MarketClient : IMarketClient
+public class MarketClient(ILogger<MarketClient> logger, IHttpClientFactory httpClientFactory) : IMarketClient
 {
-    private readonly ILogger<MarketClient> _logger;
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly ILogger<MarketClient> _logger = logger;
+    private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
 
-    private readonly JsonSerializerOptions _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-
-    public MarketClient(ILogger<MarketClient> logger, IHttpClientFactory httpClientFactory)
-    {
-        _logger = logger;
-        _httpClientFactory = httpClientFactory;
-    }
+    private readonly JsonSerializerOptions _options = new() { PropertyNameCaseInsensitive = true };
 
     public async Task<List<MarketChartPoint>?> GetMarketChartByDateRange(DateOnly fromDate, DateOnly toDate)
     {
@@ -46,8 +40,8 @@ public class MarketClient : IMarketClient
                 return data;
             }
 
-            var exception = new HttpRequestException(response.StatusCode.ToString());
-            _logger.LogError(exception, "Error getting market chart data");
+            var exception = new HttpRequestException("Error getting market chart data", null, response.StatusCode);
+            _logger.LogError(exception, "Error getting market chart data. Status: {status}", response.StatusCode);
             throw exception;
         }
     }
