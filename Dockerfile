@@ -11,7 +11,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine as runtime
 WORKDIR /app
 COPY --from=build /app .
 
-# RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-# USER appuser
+# Use default non-root user
+USER app
 
 ENTRYPOINT ["dotnet", "App.dll"]
