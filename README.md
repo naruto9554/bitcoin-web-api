@@ -43,20 +43,8 @@ dotnet test
 
 ## Docker
 
-Build
-
-```cmd
-docker build -f Dockerfile -t app .
-```
-
 Run API locally via Docker
 
 ```cmd
-docker-compose -f docker-compose.http.yml up
-```
-
-or
-
-```cmd
-docker-compose -f docker-compose.https.yml up
+docker-compose up app --build
 ```
