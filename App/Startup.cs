@@ -39,6 +39,8 @@ public class Startup(IConfigurationRoot configuration)
             app.UseDeveloperExceptionPage();
         }
 
+        app.UseRouting();
+
         app.UseSwagger();
         app.UseSwaggerUI();
 
