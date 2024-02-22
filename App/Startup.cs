@@ -44,7 +44,9 @@ public class Startup(IConfigurationRoot configuration)
 
         if (env.IsProduction())
         {
-            app.UseHttpsRedirection();
+            app.UseHsts();
         }
+
+        app.UseHttpsRedirection();
     }
 }
