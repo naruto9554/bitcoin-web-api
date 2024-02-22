@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [{
+        "name": "Debug",
+        "type": "coreclr",
+        "request": "launch",
+        "program": "${workspaceRoot}/App/bin/Debug/net8.0/App.dll",
+        "env": {
+            "ASPNETCORE_ENVIRONMENT": "Development"
+        }
+    }]
+}
