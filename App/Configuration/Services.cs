@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
@@ -22,6 +23,12 @@ public static class Services
             serializerOptions.Converters.Add(new JsonStringEnumConverter());
         });
         services.Configure<KestrelServerOptions>(opt => { opt.AddServerHeader = false; });
+
+        services.AddOutputCache(opt =>
+        {
+            opt.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(10);
+            opt.AddBasePolicy(builder => builder.Cache());
+        });
 
         services.AddHttpClient();
 

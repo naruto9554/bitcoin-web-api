@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+
 public static class Middleware
 {
     public static void ConfigureMiddleware(this WebApplication app)
@@ -13,7 +14,7 @@ public static class Middleware
         }
 
         app.UseRouting();
-
+        app.UseOutputCache();
         app.UseSwagger();
         app.UseSwaggerUI();
 
