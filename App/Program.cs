@@ -6,9 +6,9 @@ builder.Services.ConfigureServices();
 
 var app = builder.Build();
 
-app.ConfigureMiddleware();
-
 app.ConfigureEndpoints();
+
+app.ConfigureMiddleware();
 
 app.Run();
 

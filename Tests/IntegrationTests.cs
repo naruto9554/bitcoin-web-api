@@ -5,6 +5,7 @@ using Xunit;
 
 public class IntegrationTests(IntegrationFixture fixture) : IClassFixture<IntegrationFixture>
 {
+    private const string BaseUrl = "/api/v1";
     private readonly IntegrationFixture _fixture = fixture;
 
     [Theory]
@@ -13,7 +14,7 @@ public class IntegrationTests(IntegrationFixture fixture) : IClassFixture<Integr
     [InlineData("", null, HttpStatusCode.BadRequest)]
     public async Task LongestDownwardTrend(string? fromDate, string? toDate, HttpStatusCode status)
     {
-        var result = await _fixture.Client.GetAsync($"/longestdownwardtrend?fromDate={fromDate}&toDate={toDate}");
+        var result = await _fixture.Client.GetAsync($"{BaseUrl}/longestdownwardtrend?fromDate={fromDate}&toDate={toDate}");
         result.StatusCode.Should().BeOneOf(status, HttpStatusCode.TooManyRequests);
     }
 
@@ -23,7 +24,7 @@ public class IntegrationTests(IntegrationFixture fixture) : IClassFixture<Integr
     [InlineData("", null, HttpStatusCode.BadRequest)]
     public async Task HighestTradingVolume(string? fromDate, string? toDate, HttpStatusCode status)
     {
-        var result = await _fixture.Client.GetAsync($"/highestradingvolume?fromDate={fromDate}&toDate={toDate}");
+        var result = await _fixture.Client.GetAsync($"{BaseUrl}/highestradingvolume?fromDate={fromDate}&toDate={toDate}");
         result.StatusCode.Should().BeOneOf(status, HttpStatusCode.TooManyRequests);
     }
 
@@ -33,7 +34,7 @@ public class IntegrationTests(IntegrationFixture fixture) : IClassFixture<Integr
     [InlineData("", null, HttpStatusCode.BadRequest)]
     public async Task BuyAndSell(string? fromDate, string? toDate, HttpStatusCode status)
     {
-        var result = await _fixture.Client.GetAsync($"/buyandsell?fromDate={fromDate}&toDate={toDate}");
+        var result = await _fixture.Client.GetAsync($"{BaseUrl}/buyandsell?fromDate={fromDate}&toDate={toDate}");
         result.StatusCode.Should().BeOneOf(status, HttpStatusCode.TooManyRequests);
     }
 

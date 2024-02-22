@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -10,9 +11,18 @@ public static class Endpoints
     private static readonly OpenApiString ExampleFromDate = new("2022-01-01");
     private static readonly OpenApiString ExampleToDate = new("2022-01-31");
 
-    public static IEndpointRouteBuilder ConfigureEndpoints(this IEndpointRouteBuilder endpoints)
+    public static void ConfigureEndpoints(this WebApplication app)
     {
-        endpoints.MapGet("/longestdownwardtrend", async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
+        var apiVersionSet = app.NewApiVersionSet()
+        .HasApiVersion(new ApiVersion(1))
+        .ReportApiVersions()
+        .Build();
+
+        var group = app
+        .MapGroup("api/v{version:apiVersion}")
+        .WithApiVersionSet(apiVersionSet);
+
+        group.MapGet("/longestdownwardtrend", async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
         {
             try
             {
@@ -43,7 +53,7 @@ public static class Endpoints
             return operation;
         });
 
-        endpoints.MapGet("/highestradingvolume", async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
+        group.MapGet("/highestradingvolume", async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
         {
             try
             {
@@ -75,7 +85,7 @@ public static class Endpoints
             return operation;
         });
 
-        endpoints.MapGet("/buyandsell", async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
+        group.MapGet("/buyandsell", async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
         {
             try
             {
@@ -106,7 +116,5 @@ public static class Endpoints
             operation.Parameters.Last().Example = ExampleToDate;
             return operation;
         });
-
-        return endpoints;
     }
 }

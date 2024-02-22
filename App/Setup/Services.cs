@@ -1,6 +1,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +11,20 @@ public static class Services
     public static void ConfigureServices(this IServiceCollection services)
     {
         services.AddEndpointsApiExplorer();
+
+        services.AddApiVersioning(opt =>
+        {
+            opt.DefaultApiVersion = new ApiVersion(1);
+            opt.AssumeDefaultVersionWhenUnspecified = true;
+            opt.ApiVersionReader = new UrlSegmentApiVersionReader();
+        }).AddApiExplorer(opt =>
+        {
+            opt.GroupNameFormat = "'v'VVV";
+            opt.SubstituteApiVersionInUrl = true;
+        });
+
         services.AddSwaggerGen();
+        services.ConfigureOptions<ConfigureSwaggerOptions>();
 
         services.Configure<JsonOptions>(opt =>
         {

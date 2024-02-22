@@ -16,7 +16,16 @@ public static class Middleware
         app.UseRouting();
         app.UseOutputCache();
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(opt =>
+        {
+            var descriptions = app.DescribeApiVersions();
+            foreach (var desc in descriptions)
+            {
+                var url = $"/swagger/{desc.GroupName}/swagger.json";
+                var name = desc.GroupName.ToUpperInvariant();
+                opt.SwaggerEndpoint(url, name);
+            }
+        });
 
         if (env.IsProduction())
         {
