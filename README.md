@@ -23,28 +23,8 @@ Requirements:
 
 - [.NET 8 SDK ](https://dotnet.microsoft.com/download/dotnet/8.0) installed
 
-Run API locally via dotnet
+Run API locally `dotnet watch run --project App`
 
-```cmd
-dotnet run --project App
-```
+Run API locally via Docker `docker-compose up app --build`
 
-or
-
-```cmd
-dotnet watch run --project App
-```
-
-Run tests:
-
-```cmd
-dotnet test
-```
-
-## Docker
-
-Run API locally via Docker
-
-```cmd
-docker-compose up app --build
-```
+Run tests `dotnet test`

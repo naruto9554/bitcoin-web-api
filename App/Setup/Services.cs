@@ -36,7 +36,10 @@ public static class Services
             serializerOptions.PropertyNameCaseInsensitive = true;
             serializerOptions.Converters.Add(new JsonStringEnumConverter());
         });
-        services.Configure<KestrelServerOptions>(opt => { opt.AddServerHeader = false; });
+        services.Configure<KestrelServerOptions>(opt =>
+        {
+            opt.AddServerHeader = false;
+        });
 
         services.AddOutputCache(opt =>
         {
