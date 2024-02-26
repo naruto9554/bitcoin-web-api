@@ -1,12 +1,15 @@
 {
     "version": "0.2.0",
     "configurations": [{
-        "name": "Debug",
+        "name": "debug",
         "type": "coreclr",
         "request": "launch",
+        "preLaunchTask": "build",
+        "requireExactSource": false,
         "program": "${workspaceRoot}/App/bin/Debug/net8.0/App.dll",
         "env": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
+            "ASPNETCORE_ENVIRONMENT": "Development",
+            "ASPNETCORE_HTTP_PORTS": "8080"
         }
     }]
 }
