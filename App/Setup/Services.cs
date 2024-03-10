@@ -47,6 +47,7 @@ public static class Services
             opt.AddBasePolicy(builder => builder.Cache());
         });
 
+        services.AddHealthChecks();
         services.AddHttpClient();
 
         services.AddScoped<IMarketClient, MarketClient>();

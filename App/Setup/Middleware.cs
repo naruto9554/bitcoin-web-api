@@ -27,6 +27,8 @@ public static class Middleware
             }
         });
 
+        app.MapHealthChecks("health");
+
         if (env.IsProduction())
         {
             app.UseHsts();
