@@ -8,8 +8,8 @@ using Microsoft.OpenApi.Any;
 
 public static class Endpoints
 {
-    private static readonly OpenApiString ExampleFromDate = new("2022-01-01");
-    private static readonly OpenApiString ExampleToDate = new("2022-01-31");
+    private static readonly OpenApiString ExampleFromDate = new(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd"));
+    private static readonly OpenApiString ExampleToDate = new(DateTime.Now.ToString("yyyy-MM-dd"));
 
     public static void ConfigureEndpoints(this WebApplication app)
     {

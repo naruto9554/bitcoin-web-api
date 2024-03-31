@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -8,10 +9,16 @@ public class IntegrationTests(IntegrationFixture fixture) : IClassFixture<Integr
     private const string BaseUrl = "/api/v1";
     private readonly IntegrationFixture _fixture = fixture;
 
+    public static TheoryData<string?, string?, HttpStatusCode> Cases =>
+    new TheoryData<string?, string?, HttpStatusCode>
+    {
+            {DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd"), DateTime.Now.ToString("yyyy-MM-dd"), HttpStatusCode.OK},
+            {DateTime.Now.AddMonths(-13).ToString("yyyy-MM-dd"), DateTime.Now.AddMonths(-12).ToString("yyyy-MM-dd"), HttpStatusCode.Unauthorized}, //Unauthorized for over 365 days old queries
+            {"", null, HttpStatusCode.BadRequest},
+    };
+
     [Theory]
-    [InlineData("2022-01-01", "2022-01-31", HttpStatusCode.OK)]
-    [InlineData("1822-01-01", "1822-01-31", HttpStatusCode.NotFound)]
-    [InlineData("", null, HttpStatusCode.BadRequest)]
+    [MemberData(nameof(Cases))]
     public async Task LongestDownwardTrend(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var result = await _fixture.Client.GetAsync($"{BaseUrl}/longestdownwardtrend?fromDate={fromDate}&toDate={toDate}");
@@ -19,9 +26,7 @@ public class IntegrationTests(IntegrationFixture fixture) : IClassFixture<Integr
     }
 
     [Theory]
-    [InlineData("2022-01-01", "2022-01-31", HttpStatusCode.OK)]
-    [InlineData("1822-01-01", "1822-01-31", HttpStatusCode.NotFound)]
-    [InlineData("", null, HttpStatusCode.BadRequest)]
+    [MemberData(nameof(Cases))]
     public async Task HighestTradingVolume(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var result = await _fixture.Client.GetAsync($"{BaseUrl}/highestradingvolume?fromDate={fromDate}&toDate={toDate}");
@@ -29,9 +34,7 @@ public class IntegrationTests(IntegrationFixture fixture) : IClassFixture<Integr
     }
 
     [Theory]
-    [InlineData("2022-01-01", "2022-01-31", HttpStatusCode.OK)]
-    [InlineData("1822-01-01", "1822-01-31", HttpStatusCode.NotFound)]
-    [InlineData("", null, HttpStatusCode.BadRequest)]
+    [MemberData(nameof(Cases))]
     public async Task BuyAndSell(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var result = await _fixture.Client.GetAsync($"{BaseUrl}/buyandsell?fromDate={fromDate}&toDate={toDate}");
