@@ -5,11 +5,14 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
 public static class Services
 {
     public static void ConfigureServices(this IServiceCollection services)
     {
+        services.AddSerilog();
+
         services.AddEndpointsApiExplorer();
 
         services.AddApiVersioning(opt =>

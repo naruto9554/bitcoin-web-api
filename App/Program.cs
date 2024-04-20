@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Builder;
+using Serilog;
+
+Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
