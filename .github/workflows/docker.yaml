@@ -3,9 +3,23 @@ on:
   push:
     branches:
       - master
+    paths:
+      - "App/**/*.cs"
+      - "App/App.csproj"
+      - "Dockerfile"
+      - ".dockerignore"
+      - "!.github/**"
+      - ".github/workflows/docker.yaml"
   pull_request:
     branches:
       - master
+    paths:
+      - "App/**/*.cs"
+      - "App/App.csproj"
+      - "Dockerfile"
+      - ".dockerignore"
+      - "!.github/**"
+      - ".github/workflows/docker.yaml"
   workflow_dispatch:
 jobs:
   docker:
