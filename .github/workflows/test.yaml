@@ -1,20 +1,11 @@
 name: test
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - "**.cs"
-      - "**.csproj"
-      - "!.github/**"
-      - ".github/workflows/test.yaml"
   pull_request:
     branches:
       - master
     paths:
       - "**.cs"
       - "**.csproj"
-      - "!.github/**"
       - ".github/workflows/test.yaml"
   workflow_dispatch:
 jobs:

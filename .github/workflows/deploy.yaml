@@ -5,10 +5,8 @@ on:
       - master
     paths:
       - "App/**/*.cs"
-      - "App/App.csproj"
+      - "App/**/*.csproj"
       - "Dockerfile"
-      - ".dockerignore"
-      - "!.github/**"
       - ".github/workflows/deploy.yaml"
   workflow_dispatch:
 jobs:
