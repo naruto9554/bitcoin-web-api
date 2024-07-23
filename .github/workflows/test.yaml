@@ -21,9 +21,9 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ matrix.dotnet }}
-      - name: Restore dependencies
+      - name: Restore
         run: dotnet restore
-      - name: Build app
+      - name: Build
         run: dotnet build
       - name: Test
         run: dotnet test

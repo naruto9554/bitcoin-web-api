@@ -36,7 +36,6 @@ public class MarketClient(ILogger<MarketClient> logger, IHttpClientFactory httpC
 
                 var points = MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart);
                 var data = MarketChartHelper.GetEarliestMarketChartPointsByDate(points);
-                _logger.LogInformation("Successfully found market chart data. Points: {count}", data.Count);
                 return data;
             }
 
