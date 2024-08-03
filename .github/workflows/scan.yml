@@ -16,10 +16,10 @@ on:
         type: string
         default: critical,high
       package-types:
-        description: "Comma-separated list of package types to scan for: e.g. apk, nuget"
+        description: "Comma-separated list of package types to scan for: e.g. apk, nuget or empty for all"
         required: true
         type: string
-        default: "nuget"
+        default: ""
   workflow_dispatch:
     inputs:
       severities:
@@ -28,13 +28,40 @@ on:
         type: string
         default: critical,high
       package-types:
-        description: "Comma-separated list of package types to scan for: e.g. apk, nuget"
-        required: true
+        description: "Comma-separated list of package types to scan for: e.g. apk, nuget or empty for all"
+        required: false
         type: string
         default: "nuget"
+
 jobs:
+  determine-package-type:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    outputs:
+      package-types: ${{ steps.set-output.outputs.package-types }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Determine Package Types
+        id: set-output
+        run: |
+          package_types=""
+          PR_FILES=$(gh pr diff ${{ github.event.pull_request.number }} --name-only)
+
+          echo "Changed files: $PR_FILES"
+
+          if echo "$PR_FILES" | grep -q 'Dockerfile'; then
+            package_types=""
+          elif echo "$PR_FILES" | grep -qE '\.(cs|csproj)$'; then
+            package_types="nuget"
+          fi
+
+          echo "package-types=${package_types}" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   scan:
     runs-on: ubuntu-latest
+    needs: determine-package-type
+    if: always()
     permissions:
       pull-requests: write
     env:
@@ -64,6 +91,6 @@ jobs:
           command: cves
           image: local://${{ env.IMAGE_TAG }}
           only-severities: ${{ inputs.severities || 'critical,high' }}
-          only-package-types: ${{ inputs.package-types || ''}}
+          only-package-types: ${{ needs.determine-package-type.outputs.package-types || inputs.package-types }}
           only-fixed: true
           exit-code: true
