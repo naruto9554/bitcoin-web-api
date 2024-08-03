@@ -8,7 +8,7 @@ RUN dotnet restore
 
 RUN dotnet publish -c release -o /app
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine as runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine
 
 COPY --from=build /app .
 
