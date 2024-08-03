@@ -15,6 +15,11 @@ on:
         required: true
         type: string
         default: critical,high
+      package-types:
+        description: "Comma-separated list of package types to scan for: e.g. apk, nuget"
+        required: true
+        type: string
+        default: "nuget"
   workflow_dispatch:
     inputs:
       severities:
@@ -22,6 +27,11 @@ on:
         required: true
         type: string
         default: critical,high
+      package-types:
+        description: "Comma-separated list of package types to scan for: e.g. apk, nuget"
+        required: true
+        type: string
+        default: "nuget"
 jobs:
   scan:
     runs-on: ubuntu-latest
@@ -54,5 +64,6 @@ jobs:
           command: cves
           image: local://${{ env.IMAGE_TAG }}
           only-severities: ${{ inputs.severities || 'critical,high' }}
+          only-package-types: ${{ inputs.package-types || ''}}
           only-fixed: true
           exit-code: true

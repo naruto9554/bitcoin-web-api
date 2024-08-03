@@ -15,6 +15,7 @@ jobs:
     secrets: inherit
     with:
       severities: critical
+      package-types: ""
   deploy:
     runs-on: ubuntu-latest
     needs: scan
