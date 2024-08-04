@@ -85,6 +85,9 @@ jobs:
           push: false
           load: true
           tags: ${{ env.IMAGE_TAG }}
+        env:
+          DOCKER_BUILD_SUMMARY: false
+          DOCKER_BUILD_RECORD_UPLOAD: false
       - name: Scan
         uses: docker/scout-action@v1
         with:
