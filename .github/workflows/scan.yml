@@ -84,6 +84,8 @@ jobs:
           context: .
           push: false
           load: true
+          pull: false
+          no-cache: false
           tags: ${{ env.IMAGE_TAG }}
         env:
           DOCKER_BUILD_SUMMARY: false
@@ -91,9 +93,11 @@ jobs:
       - name: Scan
         uses: docker/scout-action@v1
         with:
-          command: cves
+          command: cves,recommendations
           image: local://${{ env.IMAGE_TAG }}
           only-severities: ${{ inputs.severities || 'critical,high' }}
           only-package-types: ${{ needs.determine-package-type.outputs.package-types || inputs.package-types }}
           only-fixed: true
+          summary: true
+          format: json
           exit-code: true
