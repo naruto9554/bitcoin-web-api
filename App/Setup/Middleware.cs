@@ -47,5 +47,7 @@ public static class Middleware
             context.Response.Headers.Append("Referrer-Policy", "no-referrer");
             await next();
         });
+
+        app.UseRateLimiter();
     }
 }

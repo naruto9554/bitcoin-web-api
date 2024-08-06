@@ -1,6 +1,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.RateLimiting;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -68,6 +69,28 @@ public static class Services
             options.Cookie.HttpOnly = true;
             options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             options.Cookie.SameSite = SameSiteMode.Strict;
+        });
+
+        services.AddRateLimiter(opt =>
+        {
+            opt.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+            {
+                return RateLimitPartition.GetFixedWindowLimiter(
+                    partitionKey: httpContext.Request.Path.ToString(),
+                    factory: _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 10,
+                        Window = TimeSpan.FromMinutes(1),
+                        QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                        QueueLimit = 2
+                    });
+            });
+
+            opt.OnRejected = async (context, cancellationToken) =>
+            {
+                context.HttpContext.Response.StatusCode = 429;
+                await context.HttpContext.Response.WriteAsync("Too many requests. Please try again later.", cancellationToken);
+            };
         });
 
         services.AddScoped<IMarketClient, MarketClient>();
