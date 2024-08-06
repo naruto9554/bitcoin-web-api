@@ -6,7 +6,7 @@ API based on [GoinGecko's public API.](https://www.coingecko.com/en/api/document
 2. Which date has the highest trading volume?
 3. What are the best days to buy and sell?
 
-Use API hosted on [Render](https://bitcoin-web-api.onrender.com/swagger) with built-in Swagger
+Use API hosted on [Render](https://bitcoin-web-api.onrender.com) with built-in Swagger
 or with any suitable tool of your choice.
 
 Input date format: `yyyy-MM-dd`

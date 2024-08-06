@@ -28,6 +28,7 @@ public static class Middleware
                 var name = desc.GroupName.ToUpperInvariant();
                 opt.SwaggerEndpoint(url, name);
             }
+            opt.RoutePrefix = string.Empty;
         });
 
         app.MapHealthChecks("health");

@@ -44,7 +44,7 @@ public class IntegrationTests(IntegrationFixture fixture) : IClassFixture<Integr
     [Fact]
     public async Task Swagger()
     {
-        var result = await _fixture.Client.GetAsync("/swagger");
+        var result = await _fixture.Client.GetAsync("/");
         result.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
