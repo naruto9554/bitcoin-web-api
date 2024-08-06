@@ -1,3 +1,5 @@
+using System.Data.Common;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +20,8 @@ public static class Middleware
 
         app.UseOutputCache();
 
+        app.UseStaticFiles();
+
         app.UseSwagger();
         app.UseSwaggerUI(opt =>
         {
@@ -29,6 +33,8 @@ public static class Middleware
                 opt.SwaggerEndpoint(url, name);
             }
             opt.RoutePrefix = string.Empty;
+            var indexPath = Path.Combine(env.WebRootPath, "swagger-ui", "index.html");
+            opt.IndexStream = () => new FileStream(indexPath, FileMode.Open, FileAccess.Read);
         });
 
         app.MapHealthChecks("health");

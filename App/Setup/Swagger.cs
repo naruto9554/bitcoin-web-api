@@ -20,9 +20,9 @@ public class ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider) : 
     {
         var info = new OpenApiInfo()
         {
-            Title = "Web API",
+            Title = "Bitcoin Web API",
             Version = description.ApiVersion.ToString(),
-            Description = "Description of Web API",
+            Description = "Description of API",
         };
 
         if (description.IsDeprecated)
