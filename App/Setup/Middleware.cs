@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 
 public static class Middleware
@@ -14,7 +15,9 @@ public static class Middleware
         }
 
         app.UseRouting();
+
         app.UseOutputCache();
+
         app.UseSwagger();
         app.UseSwaggerUI(opt =>
         {
@@ -35,5 +38,14 @@ public static class Middleware
         }
 
         app.UseHttpsRedirection();
+
+        app.Use(async (context, next) =>
+        {
+            context.Response.Headers.Append("Content-Security-Policy", "default-src 'self'");
+            context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
+            context.Response.Headers.Append("X-Frame-Options", "DENY");
+            context.Response.Headers.Append("Referrer-Policy", "no-referrer");
+            await next();
+        });
     }
 }

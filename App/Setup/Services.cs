@@ -2,6 +2,8 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Asp.Versioning;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,8 +52,23 @@ public static class Services
             opt.AddBasePolicy(builder => builder.Cache());
         });
 
+        services.AddHsts(opt =>
+        {
+            opt.MaxAge = TimeSpan.FromDays(365);
+            opt.IncludeSubDomains = true;
+            opt.Preload = true;
+        });
+
         services.AddHealthChecks();
+
         services.AddHttpClient();
+
+        services.ConfigureApplicationCookie(options =>
+        {
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            options.Cookie.SameSite = SameSiteMode.Strict;
+        });
 
         services.AddScoped<IMarketClient, MarketClient>();
         services.AddScoped<IMarketService, MarketService>();
