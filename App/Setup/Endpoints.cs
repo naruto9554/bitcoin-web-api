@@ -13,107 +13,104 @@ public static class Endpoints
     public static void ConfigureEndpoints(this WebApplication app)
     {
         var apiVersionSet = app.NewApiVersionSet()
-        .HasApiVersion(new ApiVersion(1))
-        .ReportApiVersions()
-        .Build();
+            .HasApiVersion(new ApiVersion(1))
+            .ReportApiVersions()
+            .Build();
 
         var group = app
-        .MapGroup("api/v{version:apiVersion}")
-        .WithApiVersionSet(apiVersionSet);
+            .MapGroup("api/v{version:apiVersion}")
+            .WithApiVersionSet(apiVersionSet);
 
-        group.MapGet("/longestdownwardtrend", async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
-        {
-            try
+        ConfigureEndpoint(group, "/longestdownwardtrend",
+            "Get longest downward trend in days between given dates",
+            async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
             {
-                var result = await service.GetLongestDownwardTrend(fromDate, toDate);
-                if (result is null)
+                try
                 {
-                    return Results.NotFound();
+                    var result = await service.GetLongestDownwardTrend(fromDate, toDate);
+                    if (result is null)
+                    {
+                        return Results.NotFound();
+                    }
+                    return Results.Ok(new
+                    {
+                        Days = result
+                    });
                 }
-                return Results.Ok(new
+                catch (System.Net.Http.HttpRequestException ex)
                 {
-                    Days = result
-                });
-            }
-            catch (System.Net.Http.HttpRequestException ex)
-            {
-                return Results.Problem(statusCode: (int?)ex.StatusCode);
-            }
-            catch (Exception)
-            {
-                return Results.Problem();
-            }
-        })
-        .WithOpenApi(operation =>
-        {
-            operation.Summary = "Get longest downward trend in days between given dates";
-            operation.Parameters[0].Example = ExampleFromDate;
-            operation.Parameters[^1].Example = ExampleToDate;
-            return operation;
-        });
+                    return Results.Problem(statusCode: (int?)ex.StatusCode);
+                }
+                catch (Exception)
+                {
+                    return Results.Problem();
+                }
+            });
 
-        group.MapGet("/highestradingvolume", async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
-        {
-            try
+        ConfigureEndpoint(group, "/highestradingvolume",
+            "Get the date with the highest trading volume between given dates",
+            async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
             {
-                var result = await service.GetHighestTradingVolume(fromDate, toDate);
-                if (result is null)
+                try
                 {
-                    return Results.NotFound();
+                    var result = await service.GetHighestTradingVolume(fromDate, toDate);
+                    if (result is null)
+                    {
+                        return Results.NotFound();
+                    }
+                    return Results.Ok(new
+                    {
+                        Date = result?.Date,
+                        Volume = result?.Volume,
+                    });
                 }
-                return Results.Ok(new
+                catch (System.Net.Http.HttpRequestException ex)
                 {
-                    Date = result?.Date,
-                    Volume = result?.Volume,
-                });
-            }
-            catch (System.Net.Http.HttpRequestException ex)
-            {
-                return Results.Problem(statusCode: (int?)ex.StatusCode);
-            }
-            catch (Exception)
-            {
-                return Results.Problem();
-            }
-        })
-        .WithOpenApi(operation =>
-        {
-            operation.Summary = "Get the date with the highest trading volume between given dates";
-            operation.Parameters[0].Example = ExampleFromDate;
-            operation.Parameters[^1].Example = ExampleToDate;
-            return operation;
-        });
+                    return Results.Problem(statusCode: (int?)ex.StatusCode);
+                }
+                catch (Exception)
+                {
+                    return Results.Problem();
+                }
+            });
 
-        group.MapGet("/buyandsell", async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
-        {
-            try
+        ConfigureEndpoint(group, "/buyandsell",
+            "Get pair of dates when it is best to buy and sell between given dates",
+            async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
             {
-                var result = await service.GetBestBuyAndSellDates(fromDate, toDate);
-                if (result is null)
+                try
                 {
-                    return Results.NotFound();
+                    var result = await service.GetBestBuyAndSellDates(fromDate, toDate);
+                    if (result is null)
+                    {
+                        return Results.NotFound();
+                    }
+                    return Results.Ok(new
+                    {
+                        SellDate = result?.SellDate,
+                        BuyDate = result?.BuyDate,
+                    });
                 }
-                return Results.Ok(new
+                catch (System.Net.Http.HttpRequestException ex)
                 {
-                    SellDate = result?.SellDate,
-                    BuyDate = result?.BuyDate,
-                });
-            }
-            catch (System.Net.Http.HttpRequestException ex)
+                    return Results.Problem(statusCode: (int?)ex.StatusCode);
+                }
+                catch (Exception)
+                {
+                    return Results.Problem();
+                }
+            });
+    }
+
+    private static void ConfigureEndpoint(RouteGroupBuilder group, string route, string summary, Delegate handler)
+    {
+        group.MapGet(route, handler)
+            .WithOpenApi(operation =>
             {
-                return Results.Problem(statusCode: (int?)ex.StatusCode);
-            }
-            catch (Exception)
-            {
-                return Results.Problem();
-            }
-        })
-        .WithOpenApi(operation =>
-        {
-            operation.Summary = "Get pair of dates when it is best to buy and sell between given dates";
-            operation.Parameters[0].Example = ExampleFromDate;
-            operation.Parameters[^1].Example = ExampleToDate;
-            return operation;
-        });
+                operation.Summary = summary;
+                operation.Parameters[0].Example = ExampleFromDate;
+                operation.Parameters[^1].Example = ExampleToDate;
+                return operation;
+            });
     }
 }
