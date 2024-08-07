@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -48,8 +47,8 @@ public static class Endpoints
         .WithOpenApi(operation =>
         {
             operation.Summary = "Get longest downward trend in days between given dates";
-            operation.Parameters.First().Example = ExampleFromDate;
-            operation.Parameters.Last().Example = ExampleToDate;
+            operation.Parameters[0].Example = ExampleFromDate;
+            operation.Parameters[^1].Example = ExampleToDate;
             return operation;
         });
 
@@ -80,8 +79,8 @@ public static class Endpoints
         .WithOpenApi(operation =>
         {
             operation.Summary = "Get the date with the highest trading volume between given dates";
-            operation.Parameters.First().Example = ExampleFromDate;
-            operation.Parameters.Last().Example = ExampleToDate;
+            operation.Parameters[0].Example = ExampleFromDate;
+            operation.Parameters[^1].Example = ExampleToDate;
             return operation;
         });
 
@@ -112,8 +111,8 @@ public static class Endpoints
         .WithOpenApi(operation =>
         {
             operation.Summary = "Get pair of dates when it is best to buy and sell between given dates";
-            operation.Parameters.First().Example = ExampleFromDate;
-            operation.Parameters.Last().Example = ExampleToDate;
+            operation.Parameters[0].Example = ExampleFromDate;
+            operation.Parameters[^1].Example = ExampleToDate;
             return operation;
         });
     }
