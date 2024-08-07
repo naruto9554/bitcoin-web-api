@@ -8,23 +8,23 @@ public static class MarketChartHelper
     {
         if (marketChart.Prices is null)
         {
-            throw new ArgumentNullException(nameof(marketChart.Prices));
+            throw new MarketChartException($"{nameof(marketChart.Prices)} is null");
         }
 
         if (marketChart.Market_caps is null)
         {
-            throw new ArgumentNullException(nameof(marketChart.Market_caps));
+            throw new MarketChartException($"{nameof(marketChart.Market_caps)} is null");
         }
 
         if (marketChart.Total_volumes is null)
         {
-            throw new ArgumentNullException(nameof(marketChart.Total_volumes));
+            throw new MarketChartException($"{nameof(marketChart.Total_volumes)} is null");
         }
 
         if (marketChart.Prices.Length != marketChart.Market_caps.Length &&
             marketChart.Prices.Length != marketChart.Total_volumes.Length)
         {
-            throw new Exception("Unequal number of data points in market chart");
+            throw new MarketChartException("Unequal number of data points in market chart");
         }
 
         var marketChartPoints = new List<MarketChartPoint>();
@@ -70,7 +70,7 @@ public static class MarketChartHelper
 
                 if (earliest is null)
                 {
-                    throw new ArgumentNullException(nameof(earliest));
+                    throw new MarketChartException($"{nameof(earliest)} is null");
                 }
 
                 return new MarketChartPoint

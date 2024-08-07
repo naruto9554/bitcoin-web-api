@@ -1,4 +1,4 @@
-public class Constants
+public static class Constants
 {
     public const string DateFormat = "yyyy-MM-dd";
     public const string Currency = "eur";

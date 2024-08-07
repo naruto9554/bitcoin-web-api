@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 
 public class IntegrationFixture : IDisposable
 {
-    public HttpClient Client { get; set; }
+    public HttpClient Client { get; private set; }
 
     public IntegrationFixture()
     {
@@ -16,10 +16,11 @@ public class IntegrationFixture : IDisposable
     public void Dispose()
     {
         Client?.Dispose();
+        GC.SuppressFinalize(this);
     }
 }
 
-public class ApplicationFactory() : WebApplicationFactory<Program>
+public class ApplicationFactory : WebApplicationFactory<Program>
 {
     protected override IHost CreateHost(IHostBuilder builder)
     {

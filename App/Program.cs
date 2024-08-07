@@ -13,6 +13,6 @@ app.ConfigureEndpoints();
 
 app.ConfigureMiddleware();
 
-app.Run();
+await app.RunAsync();
 
 public partial class Program { } // Reference for tests
