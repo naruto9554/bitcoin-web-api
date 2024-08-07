@@ -5,9 +5,10 @@ on:
       - master
     paths:
       - "App/**"
-      - "Tests/**"
+      - "Tsts/**"
       - "Dockerfile"
       - ".github/workflows/sonar.yml"
+  workflow_dispatch:
 jobs:
   sonarcloud:
     runs-on: ubuntu-latest
