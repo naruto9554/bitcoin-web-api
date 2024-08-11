@@ -95,7 +95,7 @@ public class MarketServiceTests
     }
 
     [Fact]
-    public async Task TestLongestDownwardTrendReturnsValue()
+    public async Task LongestDownwardTrend_ReturnsValue()
     {
         var result = await _marketService.GetLongestDownwardTrend(FromDate, ToDate);
 
@@ -104,7 +104,7 @@ public class MarketServiceTests
     }
 
     [Fact]
-    public async Task TestLongestDownwardTrendNoDataReturnsNull()
+    public async Task LongestDownwardTrend_NoData_ReturnsNull()
     {
         var result = await _marketService.GetLongestDownwardTrend(ToDateExtension, ToDateNullExtension);
 
@@ -112,7 +112,7 @@ public class MarketServiceTests
     }
 
     [Fact]
-    public async Task TestHighestTradingVolumeReturnsValue()
+    public async Task HighestTradingVolume_ReturnsValue()
     {
         var result = await _marketService.GetHighestTradingVolume(FromDate, ToDate);
 
@@ -122,7 +122,7 @@ public class MarketServiceTests
     }
 
     [Fact]
-    public async Task TestHighestTradingVolumeNoDataReturnsNull()
+    public async Task HighestTradingVolume_NoData_ReturnsNull()
     {
         var result = await _marketService.GetHighestTradingVolume(ToDateExtension, ToDateNullExtension);
 
@@ -130,7 +130,7 @@ public class MarketServiceTests
     }
 
     [Fact]
-    public async Task TestBestBuyAndSellDatesReturnsValue()
+    public async Task BestBuyAndSellDates_ReturnsValue()
     {
         var result = await _marketService.GetBestBuyAndSellDates(FromDate, ToDate);
 
@@ -140,7 +140,7 @@ public class MarketServiceTests
     }
 
     [Fact]
-    public async Task TestBestBuyAndSellDatesOnlyDecreasingReturnsNull()
+    public async Task BestBuyAndSellDates_OnlyDecreasing_ReturnsNull()
     {
         var result = await _marketService.GetBestBuyAndSellDates(ToDate, ToDateExtension);
 
@@ -148,7 +148,7 @@ public class MarketServiceTests
     }
 
     [Fact]
-    public async Task TestBestBuyAndSellDatesNoDataReturnsNull()
+    public async Task BestBuyAndSellDates_NoData_ReturnsNull()
     {
         var result = await _marketService.GetBestBuyAndSellDates(ToDateExtension, ToDateNullExtension);
 

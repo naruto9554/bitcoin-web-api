@@ -21,7 +21,7 @@ public static class MarketChartHelper
             throw new MarketChartException($"{nameof(marketChart.Total_volumes)} is null");
         }
 
-        if (marketChart.Prices.Length != marketChart.Market_caps.Length &&
+        if (marketChart.Prices.Length != marketChart.Market_caps.Length ||
             marketChart.Prices.Length != marketChart.Total_volumes.Length)
         {
             throw new MarketChartException("Unequal number of data points in market chart");
@@ -70,7 +70,7 @@ public static class MarketChartHelper
 
                 if (earliest is null)
                 {
-                    throw new MarketChartException($"{nameof(earliest)} is null");
+                    return new MarketChartPoint();
                 }
 
                 return new MarketChartPoint
