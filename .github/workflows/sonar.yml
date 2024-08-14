@@ -7,6 +7,13 @@ on:
       - "App/**"
       - "Tests/**"
       - ".github/workflows/sonar.yml"
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "App/**"
+      - "Tests/**"
+      - ".github/workflows/sonar.yml"
   workflow_dispatch:
 jobs:
   sonarcloud:
