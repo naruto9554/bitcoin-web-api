@@ -19,14 +19,6 @@ Endpoints:
 - /highestradingvolume
 - /buyandsell
 
-## Development
-
-Requirements:
-
-- [.NET 8 SDK ](https://dotnet.microsoft.com/download/dotnet/8.0) installed
-
-Run API locally `dotnet watch run --project App`
-
-Run API locally via Docker `docker-compose up app --build`
-
-Run tests `dotnet test`
+Tools used:
+- .NET SDK
+- Docker
