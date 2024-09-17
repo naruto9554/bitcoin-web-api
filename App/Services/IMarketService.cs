@@ -1,6 +1,3 @@
-using System;
-using System.Threading.Tasks;
-
 public interface IMarketService
 {
     Task<int?> GetLongestDownwardTrend(DateOnly fromDate, DateOnly toDate);

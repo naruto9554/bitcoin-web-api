@@ -1,10 +1,3 @@
-using System.Data.Common;
-using System.IO;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Hosting;
-
 public static class Middleware
 {
     public static void ConfigureMiddleware(this WebApplication app)

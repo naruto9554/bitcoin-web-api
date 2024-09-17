@@ -1,5 +1,3 @@
-using System;
-
 [Serializable]
 public class MarketChartException : Exception
 {

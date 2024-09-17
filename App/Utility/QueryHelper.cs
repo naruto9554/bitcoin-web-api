@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 public static class QueryHelper
 {
     public static Dictionary<string, string?> CreateQueryParams(DateOnly fromDate, DateOnly toDate, string currency = "eur")

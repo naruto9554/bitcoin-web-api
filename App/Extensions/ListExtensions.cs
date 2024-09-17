@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 public static class ListExtensions
 {
     public static bool IsNullOrEmpty<T>(this IList<T>? list)

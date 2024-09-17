@@ -1,5 +1,3 @@
-using System;
-
 public static class DateExtensions
 {
     public static DateOnly ToDateOnly(this DateTimeOffset offset)

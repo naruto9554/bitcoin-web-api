@@ -6,6 +6,7 @@ on:
     paths:
       - "App/**"
       - "Tests/**"
+      - "*.props"
       - ".github/workflows/sonar.yml"
   pull_request:
     branches:

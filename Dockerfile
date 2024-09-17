@@ -3,6 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 WORKDIR /app
 
 COPY App .
+COPY *.props .
 
 RUN dotnet restore
 

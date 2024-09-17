@@ -1,8 +1,4 @@
-using System;
 using Asp.Versioning;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.OpenApi.Any;
 
 public static class Endpoints

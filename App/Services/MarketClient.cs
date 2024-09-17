@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
 
 public class MarketClient(ILogger<MarketClient> logger, IHttpClientFactory httpClientFactory) : IMarketClient
 {

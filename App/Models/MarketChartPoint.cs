@@ -1,5 +1,3 @@
-using System;
-
 public record MarketChartPoint
 {
     public DateTimeOffset Date { get; set; }

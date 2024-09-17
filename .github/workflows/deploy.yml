@@ -6,6 +6,7 @@ on:
     paths:
       - "App/**/*.cs"
       - "App/**/*.csproj"
+      - "*.props"
       - "Dockerfile"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
