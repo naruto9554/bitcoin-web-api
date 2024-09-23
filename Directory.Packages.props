@@ -13,7 +13,7 @@
     <PackageVersion Include="Serilog" Version="4.0.1" />
     <PackageVersion Include="Serilog.Extensions.Hosting" Version="8.0.0" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
-    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.7.3" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.8.0" />
     <PackageVersion Include="xunit" Version="2.9.1" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2" />
   </ItemGroup>
