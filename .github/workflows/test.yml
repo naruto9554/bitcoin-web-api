@@ -4,9 +4,9 @@ on:
     branches:
       - master
     paths:
-      - "**.cs"
-      - "**.csproj"
-      - "*.props"
+      - "**/*.cs"
+      - "**/*.csproj"
+      - "**/*.props"
       - ".github/workflows/test.yml"
   workflow_dispatch:
 jobs:

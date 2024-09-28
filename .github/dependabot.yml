@@ -7,7 +7,13 @@ updates:
       time: "21:00"
       timezone: "Europe/Helsinki"
   - package-ecosystem: "nuget"
-    directory: "/"
+    directory: "/App"
+    schedule:
+      interval: "daily"
+      time: "21:00"
+      timezone: "Europe/Helsinki"
+  - package-ecosystem: "nuget"
+    directory: "/Tests"
     schedule:
       interval: "daily"
       time: "21:00"

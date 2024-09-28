@@ -4,9 +4,8 @@ on:
     branches:
       - master
     paths:
-      - "App/**/*.cs"
-      - "App/**/*.csproj"
-      - "*.props"
+      - "App/**"
+      - "Directory.Build.Props"
       - "Dockerfile"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:

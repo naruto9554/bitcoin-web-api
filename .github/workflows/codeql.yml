@@ -4,7 +4,9 @@ on:
     branches:
       - master
     paths:
-      - "**.cs"
+      - "**/*.cs"
+      - "**/*.csproj"
+      - "**/*.props"
       - ".github/workflows/codeql.yaml"
   schedule:
     - cron: "0 21 * * 0"
