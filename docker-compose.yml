@@ -11,4 +11,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_HTTP_PORTS: 80
+    user: app
     read_only: true
+    privileged: false
+    tmpfs:
+      - /tmp:rw
