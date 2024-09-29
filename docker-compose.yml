@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      no_cache: false
     image: bitcoin-web-api
     container_name: bitcoin-web-api
     ports:

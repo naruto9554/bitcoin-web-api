@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+
 public class MarketService(ILogger<MarketService> logger, IMarketClient marketClient) : IMarketService
 {
     private readonly ILogger<MarketService> _logger = logger;
