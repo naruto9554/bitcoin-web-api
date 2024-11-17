@@ -20,5 +20,6 @@ Endpoints:
 - /buyandsell
 
 Tools used:
-- .NET SDK
+
+- .NET 9 SDK
 - Docker
