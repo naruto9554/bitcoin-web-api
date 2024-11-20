@@ -1,6 +1,13 @@
 using Serilog;
 
-Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
+var config = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .Build();
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(config)
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
