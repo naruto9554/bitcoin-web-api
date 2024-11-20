@@ -33,7 +33,7 @@ public static class Endpoints
                         Days = result
                     });
                 }
-                catch (System.Net.Http.HttpRequestException ex)
+                catch (HttpRequestException ex)
                 {
                     return Results.Problem(statusCode: (int?)ex.StatusCode);
                 }
@@ -60,7 +60,7 @@ public static class Endpoints
                         Volume = result?.Volume,
                     });
                 }
-                catch (System.Net.Http.HttpRequestException ex)
+                catch (HttpRequestException ex)
                 {
                     return Results.Problem(statusCode: (int?)ex.StatusCode);
                 }
@@ -87,7 +87,7 @@ public static class Endpoints
                         BuyDate = result?.BuyDate,
                     });
                 }
-                catch (System.Net.Http.HttpRequestException ex)
+                catch (HttpRequestException ex)
                 {
                     return Results.Problem(statusCode: (int?)ex.StatusCode);
                 }
