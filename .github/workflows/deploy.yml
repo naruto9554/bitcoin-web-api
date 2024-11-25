@@ -5,7 +5,7 @@ on:
       - master
     paths:
       - "App/**"
-      - "Directory.Build.Props"
+      - "Directory.Build.props"
       - "Dockerfile"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
