@@ -16,6 +16,9 @@ on:
       - "Tests/**"
       - ".github/workflows/sonar.yml"
   workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   sonarcloud:
     runs-on: windows-latest

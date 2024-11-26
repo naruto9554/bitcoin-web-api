@@ -9,6 +9,9 @@ on:
       - "Dockerfile"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   scan:
     uses: ./.github/workflows/scan.yml
