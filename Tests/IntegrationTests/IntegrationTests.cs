@@ -11,7 +11,7 @@ public class IntegrationTests(IntegrationFixture fixture) : IClassFixture<Integr
     new TheoryData<string?, string?, HttpStatusCode>
     {
             {DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd"), DateTime.Now.ToString("yyyy-MM-dd"), HttpStatusCode.OK},
-            {DateTime.Now.AddMonths(-13).ToString("yyyy-MM-dd"), DateTime.Now.AddMonths(-12).ToString("yyyy-MM-dd"), HttpStatusCode.Unauthorized}, //Unauthorized for over 365 days old queries
+            {DateTime.Now.AddMonths(-13).ToString("yyyy-MM-dd"), DateTime.Now.AddMonths(-12).ToString("yyyy-MM-dd"), HttpStatusCode.OK}, //No longer unauthorized for over 365 days old queries
             {"", null, HttpStatusCode.BadRequest},
     };
 
