@@ -6,15 +6,28 @@ updates:
       interval: "daily"
       time: "21:00"
       timezone: "Europe/Helsinki"
+    target-branch: "master"
   - package-ecosystem: "nuget"
     directory: "/"
     schedule:
       interval: "daily"
       time: "21:00"
       timezone: "Europe/Helsinki"
+    target-branch: "master"
+    groups:
+      asp:
+        patterns:
+          - "Asp.Versioning.*"
+      aspnet:
+        patterns:
+          - "Microsoft.AspNetCore.*"
+      serilog:
+        patterns:
+          - "Serilog*"
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "daily"
       time: "21:00"
       timezone: "Europe/Helsinki"
+    target-branch: "master"
