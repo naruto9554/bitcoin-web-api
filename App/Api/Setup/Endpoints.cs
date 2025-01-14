@@ -1,5 +1,8 @@
 using Asp.Versioning;
 using Microsoft.OpenApi.Any;
+using Services;
+
+namespace Api.Setup;
 
 public static class Endpoints
 {
@@ -56,8 +59,8 @@ public static class Endpoints
                     }
                     return Results.Ok(new
                     {
-                        Date = result?.Date,
-                        Volume = result?.Volume,
+                        result?.Date,
+                        result?.Volume,
                     });
                 }
                 catch (HttpRequestException ex)
@@ -83,8 +86,8 @@ public static class Endpoints
                     }
                     return Results.Ok(new
                     {
-                        SellDate = result?.SellDate,
-                        BuyDate = result?.BuyDate,
+                        result?.SellDate,
+                        result?.BuyDate,
                     });
                 }
                 catch (HttpRequestException ex)

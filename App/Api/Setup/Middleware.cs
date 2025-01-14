@@ -1,3 +1,5 @@
+namespace Api.Setup;
+
 public static class Middleware
 {
     public static void ConfigureMiddleware(this WebApplication app)

@@ -1,5 +1,11 @@
 using FluentAssertions;
+using Services.Exceptions;
+using Services.Extensions;
+using Services.Models;
+using Services.Utility;
 using Xunit;
+
+namespace UnitTests;
 
 public class UtilityTests
 {
@@ -85,17 +91,17 @@ public class UtilityTests
             Prices =
             [
                 [1629811200000, 45000],
-                [1629897600000, 46000]
+            [1629897600000, 46000]
             ],
             Market_caps =
             [
                 [1629811200000, 850000000000],
-                [1629897600000, 860000000000]
+            [1629897600000, 860000000000]
             ],
             Total_volumes =
             [
                 [1629811200000, 35000000000],
-                [1629897600000, 36000000000]
+            [1629897600000, 36000000000]
             ]
         };
 
@@ -174,7 +180,7 @@ public class UtilityTests
             Market_caps =
             [
                 [1629811200000, 850000000000],
-                [1629897600000, 860000000000]
+            [1629897600000, 860000000000]
             ],
             Total_volumes =
             [

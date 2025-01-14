@@ -1,4 +1,7 @@
 using Microsoft.Extensions.Logging;
+using Services.Extensions;
+
+namespace Services;
 
 public class MarketService(ILogger<MarketService> logger, IMarketClient marketClient) : IMarketService
 {

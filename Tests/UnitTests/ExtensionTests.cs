@@ -1,4 +1,7 @@
+using Services.Extensions;
 using Xunit;
+
+namespace UnitTests;
 
 public class ExtensionTests
 {

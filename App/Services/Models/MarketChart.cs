@@ -1,3 +1,5 @@
+namespace Services.Models;
+
 public record MarketChart
 {
     public decimal[][]? Prices { get; init; }

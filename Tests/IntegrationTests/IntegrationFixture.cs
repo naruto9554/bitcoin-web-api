@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Hosting;
 
+namespace IntegrationTests;
+
 public class IntegrationFixture : IDisposable
 {
     public HttpClient Client { get; private set; }

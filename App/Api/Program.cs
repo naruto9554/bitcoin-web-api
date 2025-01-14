@@ -1,3 +1,4 @@
+using Api.Setup;
 using Serilog;
 
 var config = new ConfigurationBuilder()

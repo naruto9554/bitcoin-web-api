@@ -5,6 +5,9 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Serilog;
+using Services;
+
+namespace Api.Setup;
 
 public static class Services
 {

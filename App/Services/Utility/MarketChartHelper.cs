@@ -1,3 +1,8 @@
+using Services.Exceptions;
+using Services.Models;
+
+namespace Services.Utility;
+
 public static class MarketChartHelper
 {
     public static List<MarketChartPoint> MapMarketChartToMarketChartPoints(MarketChart marketChart)

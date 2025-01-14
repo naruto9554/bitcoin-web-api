@@ -1,6 +1,11 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Services.Extensions;
+using Services.Models;
+using Services.Utility;
+
+namespace Services;
 
 public class MarketClient(ILogger<MarketClient> logger, IHttpClientFactory httpClientFactory) : IMarketClient
 {

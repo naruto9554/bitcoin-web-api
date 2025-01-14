@@ -1,3 +1,5 @@
+namespace Services.Models;
+
 public record MarketChartPoint
 {
     public DateTimeOffset Date { get; set; }

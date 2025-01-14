@@ -1,7 +1,12 @@
 using FluentAssertions;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
+using Services;
+using Services.Extensions;
+using Services.Models;
 using Xunit;
+
+namespace UnitTests;
 
 public class MarketServiceTests
 {
@@ -17,59 +22,59 @@ public class MarketServiceTests
         var date = new DateTimeOffset(2021, 1, 1, 12, 0, 0, 0, new TimeSpan(0, 0, 0));
 
         var marketChartPoints = new List<MarketChartPoint> {
-            new() {
-                Date = date,
-                Price = 100m,
-                MarketCap = 100m,
-                TotalVolume = 100m,
-            },
-            new() {
-                Date = date.AddDays(1),
-                Price = 90m,
-                MarketCap = 100m,
-                TotalVolume = 200m,
-            },
-            new()
-            {
-                Date = date.AddDays(2),
-                Price = 80m,
-                MarketCap = 100m,
-                TotalVolume = 300m,
-            },
-            new() {
-                Date = date.AddDays(3),
-                Price = 70m,
-                MarketCap = 100m,
-                TotalVolume = 400m,
-            },
-            new() {
-                Date = date.AddDays(4),
-                Price = 500m,
-                MarketCap = 100m,
-                TotalVolume = 500m,
-            },
-        };
+        new() {
+            Date = date,
+            Price = 100m,
+            MarketCap = 100m,
+            TotalVolume = 100m,
+        },
+        new() {
+            Date = date.AddDays(1),
+            Price = 90m,
+            MarketCap = 100m,
+            TotalVolume = 200m,
+        },
+        new()
+        {
+            Date = date.AddDays(2),
+            Price = 80m,
+            MarketCap = 100m,
+            TotalVolume = 300m,
+        },
+        new() {
+            Date = date.AddDays(3),
+            Price = 70m,
+            MarketCap = 100m,
+            TotalVolume = 400m,
+        },
+        new() {
+            Date = date.AddDays(4),
+            Price = 500m,
+            MarketCap = 100m,
+            TotalVolume = 500m,
+        },
+    };
 
         var marketChartPointsExtension = new List<MarketChartPoint> {
-            new() {
-                Date = date.AddDays(5),
-                Price = 50m,
-                MarketCap = 100m,
-                TotalVolume = 50m,
-            },
-            new() {
-                Date = date.AddDays(6),
-                Price = 40m,
-                MarketCap = 100m,
-                TotalVolume = 40m,
-            },
-            new() {
-                Date = date.AddDays(7),
-                Price = 30m,
-                MarketCap = 100m,
-                TotalVolume = 30m,
-            },
-        };
+        new() {
+            Date = date.AddDays(5),
+            Price = 50m,
+            MarketCap = 100m,
+            TotalVolume = 50m,
+        },
+        new() {
+            Date = date.AddDays(6),
+            Price = 40m,
+            MarketCap = 100m,
+            TotalVolume = 40m,
+        },
+        new() {
+            Date = date.AddDays(7),
+            Price = 30m,
+            MarketCap = 100m,
+            TotalVolume = 30m,
+        },
+    };
 
         List<MarketChartPoint>? marketChartPointsNullExtension = null;
 
