@@ -93,12 +93,12 @@ public class UtilityTests
                 [1629811200000, 45000],
             [1629897600000, 46000]
             ],
-            Market_caps =
+            MarketCaps =
             [
                 [1629811200000, 850000000000],
             [1629897600000, 860000000000]
             ],
-            Total_volumes =
+            TotalVolumes =
             [
                 [1629811200000, 35000000000],
             [1629897600000, 36000000000]
@@ -126,8 +126,8 @@ public class UtilityTests
         var marketChart = new MarketChart
         {
             Prices = null,
-            Market_caps = [],
-            Total_volumes = []
+            MarketCaps = [],
+            TotalVolumes = []
         };
 
         var exception = Assert.Throws<MarketChartException>(() =>
@@ -142,14 +142,14 @@ public class UtilityTests
         var marketChart = new MarketChart
         {
             Prices = [],
-            Market_caps = null,
-            Total_volumes = []
+            MarketCaps = null,
+            TotalVolumes = []
         };
 
         var exception = Assert.Throws<MarketChartException>(() =>
         MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart));
 
-        Assert.Equal("Market_caps is null", exception.Message);
+        Assert.Equal("MarketCaps is null", exception.Message);
     }
 
     [Fact]
@@ -158,14 +158,14 @@ public class UtilityTests
         var marketChart = new MarketChart
         {
             Prices = [],
-            Market_caps = [],
-            Total_volumes = null
+            MarketCaps = [],
+            TotalVolumes = null
         };
 
         var exception = Assert.Throws<MarketChartException>(() =>
         MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart));
 
-        Assert.Equal("Total_volumes is null", exception.Message);
+        Assert.Equal("TotalVolumes is null", exception.Message);
     }
 
     [Fact]
@@ -177,12 +177,12 @@ public class UtilityTests
             [
                 [1629811200000, 45000]
             ],
-            Market_caps =
+            MarketCaps =
             [
                 [1629811200000, 850000000000],
             [1629897600000, 860000000000]
             ],
-            Total_volumes =
+            TotalVolumes =
             [
                 [1629811200000, 35000000000]
             ]

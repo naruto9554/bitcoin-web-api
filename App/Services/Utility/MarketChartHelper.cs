@@ -12,18 +12,18 @@ public static class MarketChartHelper
             throw new MarketChartException($"{nameof(marketChart.Prices)} is null");
         }
 
-        if (marketChart.Market_caps is null)
+        if (marketChart.MarketCaps is null)
         {
-            throw new MarketChartException($"{nameof(marketChart.Market_caps)} is null");
+            throw new MarketChartException($"{nameof(marketChart.MarketCaps)} is null");
         }
 
-        if (marketChart.Total_volumes is null)
+        if (marketChart.TotalVolumes is null)
         {
-            throw new MarketChartException($"{nameof(marketChart.Total_volumes)} is null");
+            throw new MarketChartException($"{nameof(marketChart.TotalVolumes)} is null");
         }
 
-        if (marketChart.Prices.Length != marketChart.Market_caps.Length ||
-            marketChart.Prices.Length != marketChart.Total_volumes.Length)
+        if (marketChart.Prices.Length != marketChart.MarketCaps.Length ||
+            marketChart.Prices.Length != marketChart.TotalVolumes.Length)
         {
             throw new MarketChartException("Unequal number of data points in market chart");
         }
@@ -35,8 +35,8 @@ public static class MarketChartHelper
             {
                 Date = DateTimeOffset.FromUnixTimeMilliseconds((long)marketChart.Prices[i][0]),
                 Price = marketChart.Prices[i][1],
-                MarketCap = marketChart.Market_caps[i][1],
-                TotalVolume = marketChart.Total_volumes[i][1]
+                MarketCap = marketChart.MarketCaps[i][1],
+                TotalVolume = marketChart.TotalVolumes[i][1]
             };
             marketChartPoints.Add(marketData);
         }
