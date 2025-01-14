@@ -4,12 +4,13 @@ using System.Threading.RateLimiting;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Options;
 using Serilog;
 using Services;
 
 namespace Api.Setup;
 
-public static class ApiServiceExtensions
+internal static class ApiServiceExtensions
 {
     public static void ConfigureServices(this IServiceCollection services)
     {
@@ -27,6 +28,7 @@ public static class ApiServiceExtensions
             opt.GroupNameFormat = "'v'VVV";
             opt.SubstituteApiVersionInUrl = true;
         });
+
 
         services.AddSwaggerGen();
         services.ConfigureOptions<SwaggerOptions>();

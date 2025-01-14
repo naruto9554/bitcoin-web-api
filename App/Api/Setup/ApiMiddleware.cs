@@ -1,6 +1,6 @@
 namespace Api.Setup;
 
-public static class ApiMiddleware
+internal static class ApiMiddleware
 {
     public static void ConfigureMiddleware(this WebApplication app, IWebHostEnvironment environment)
     {

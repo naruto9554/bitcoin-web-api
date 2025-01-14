@@ -5,7 +5,7 @@ using Services;
 
 namespace Api.Setup;
 
-public static class ApiEndpoints
+internal static class ApiEndpoints
 {
     private static readonly OpenApiString ExampleFromDate = new(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
     private static readonly OpenApiString ExampleToDate = new(DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
