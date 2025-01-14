@@ -1,6 +1,5 @@
 namespace Services.Exceptions;
 
-[Serializable]
 public class MarketChartException : Exception
 {
     public MarketChartException()
