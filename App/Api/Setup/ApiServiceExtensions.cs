@@ -9,7 +9,7 @@ using Services;
 
 namespace Api.Setup;
 
-public static class Services
+public static class ApiServiceExtensions
 {
     public static void ConfigureServices(this IServiceCollection services)
     {
@@ -29,7 +29,7 @@ public static class Services
         });
 
         services.AddSwaggerGen();
-        services.ConfigureOptions<ConfigureSwaggerOptions>();
+        services.ConfigureOptions<SwaggerOptions>();
 
         services.Configure<JsonOptions>(opt =>
         {

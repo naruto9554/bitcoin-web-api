@@ -5,10 +5,10 @@ using Xunit;
 
 namespace IntegrationTests;
 
-public class IntegrationTests(IntegrationFixture fixture) : IClassFixture<IntegrationFixture>
+public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
 {
     private const string BaseUrl = "/api/v1";
-    private readonly IntegrationFixture _fixture = fixture;
+    private readonly ApiFixture _fixture = fixture;
 
     public static TheoryData<string?, string?, HttpStatusCode> Cases =>
     new TheoryData<string?, string?, HttpStatusCode>

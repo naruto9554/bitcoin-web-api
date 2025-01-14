@@ -14,7 +14,7 @@
     <EnforeCodeStyleInBuild>true</EnforeCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnableCodeAnalysis>true</EnableCodeAnalysis>
-    <NoWarn>S6678;CA2007;CA1848;CA1002;CA2000;CA1724;CA1031;S3267;CA1515;S1118;CA1707;CA2234;CA1051;CA1063;S3881</NoWarn>
+    <NoWarn>S6678;CA2007;CA1848;CA1002;CA2000;CA1031;S3267;CA1515;S1118;CA1707;CA2234;CA1051;CA1063;S3881</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
     <NoWarn>$(NoWarn);CA5394</NoWarn>

@@ -1,13 +1,12 @@
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.Hosting;
 
 namespace IntegrationTests;
 
-public class IntegrationFixture : IDisposable
+public class ApiFixture : IDisposable
 {
     public HttpClient Client { get; private set; }
 
-    public IntegrationFixture()
+    public ApiFixture()
     {
         var factory = new ApplicationFactory();
         Client = factory.CreateClient();
