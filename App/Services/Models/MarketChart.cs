@@ -5,9 +5,8 @@ namespace Services.Models;
 public record MarketChart
 {
     [JsonPropertyName("prices")]
-    public decimal[][]? Prices { get; init; }
-    [JsonPropertyName("market_caps")]
-    public decimal[][]? MarketCaps { get; init; }
+    public IReadOnlyList<IReadOnlyList<decimal>>? Prices { get; init; }
+    [JsonPropertyName("market_caps")] public IReadOnlyList<IReadOnlyList<decimal>>? MarketCaps { get; init; }
     [JsonPropertyName("total_volumes")]
-    public decimal[][]? TotalVolumes { get; init; }
+    public IReadOnlyList<IReadOnlyList<decimal>>? TotalVolumes { get; init; }
 }

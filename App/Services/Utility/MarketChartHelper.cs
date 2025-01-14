@@ -22,14 +22,14 @@ public static class MarketChartHelper
             throw new MarketChartException($"{nameof(marketChart.TotalVolumes)} is null");
         }
 
-        if (marketChart.Prices.Length != marketChart.MarketCaps.Length ||
-            marketChart.Prices.Length != marketChart.TotalVolumes.Length)
+        if (marketChart.Prices.Count != marketChart.MarketCaps.Count ||
+            marketChart.Prices.Count != marketChart.TotalVolumes.Count)
         {
             throw new MarketChartException("Unequal number of data points in market chart");
         }
 
         var marketChartPoints = new List<MarketChartPoint>();
-        for (var i = 0; i < marketChart.Prices.Length; i++)
+        for (var i = 0; i < marketChart.Prices.Count; i++)
         {
             var marketData = new MarketChartPoint
             {
