@@ -18,7 +18,7 @@ var app = builder.Build();
 
 app.ConfigureEndpoints();
 
-app.ConfigureMiddleware();
+app.ConfigureMiddleware(app.Environment);
 
 await app.RunAsync();
 

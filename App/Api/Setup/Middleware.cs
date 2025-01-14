@@ -2,11 +2,9 @@ namespace Api.Setup;
 
 public static class Middleware
 {
-    public static void ConfigureMiddleware(this WebApplication app)
+    public static void ConfigureMiddleware(this WebApplication app, IWebHostEnvironment environment)
     {
-        var env = app.Environment;
-
-        if (env.IsDevelopment())
+        if (environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
@@ -28,13 +26,13 @@ public static class Middleware
                 opt.SwaggerEndpoint(url, name);
             }
             opt.RoutePrefix = string.Empty;
-            var indexPath = Path.Combine(env.WebRootPath, "swagger-ui", "index.html");
+            var indexPath = Path.Combine(environment.WebRootPath, "swagger-ui", "index.html");
             opt.IndexStream = () => new FileStream(indexPath, FileMode.Open, FileAccess.Read);
         });
 
         app.MapHealthChecks("health");
 
-        if (env.IsProduction())
+        if (environment.IsProduction())
         {
             app.UseHsts();
         }
