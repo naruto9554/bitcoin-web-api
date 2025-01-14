@@ -10,12 +10,11 @@ namespace UnitTests;
 
 public class MarketServiceTests
 {
-    public readonly DateOnly FromDate;
-    public readonly DateOnly ToDate;
-    public readonly DateOnly ToDateExtension;
-    public readonly DateOnly ToDateNullExtension;
-
-    public readonly IMarketService _marketService;
+    public DateOnly FromDate { get; }
+    public DateOnly ToDate { get; }
+    public DateOnly ToDateExtension { get; }
+    public DateOnly ToDateNullExtension { get; }
+    private readonly MarketService _marketService;
 
     public MarketServiceTests()
     {
