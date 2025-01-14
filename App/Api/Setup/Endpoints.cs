@@ -1,3 +1,4 @@
+using System.Globalization;
 using Asp.Versioning;
 using Microsoft.OpenApi.Any;
 using Services;
@@ -6,8 +7,8 @@ namespace Api.Setup;
 
 public static class Endpoints
 {
-    private static readonly OpenApiString ExampleFromDate = new(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd"));
-    private static readonly OpenApiString ExampleToDate = new(DateTime.Now.ToString("yyyy-MM-dd"));
+    private static readonly OpenApiString ExampleFromDate = new(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+    private static readonly OpenApiString ExampleToDate = new(DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
 
     public static void ConfigureEndpoints(this WebApplication app)
     {

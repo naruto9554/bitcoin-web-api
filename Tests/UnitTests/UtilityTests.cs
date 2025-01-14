@@ -1,3 +1,4 @@
+using System.Globalization;
 using FluentAssertions;
 using Services.Exceptions;
 using Services.Extensions;
@@ -200,8 +201,8 @@ public class UtilityTests
         var fromDate = new DateOnly(2024, 8, 11);
         var toDate = new DateOnly(2024, 8, 12);
         var currency = "eur";
-        var expectedFrom = fromDate.ToUnixTimestamp().ToString();
-        var expectedTo = toDate.ToUnixTimestamp().ToString();
+        var expectedFrom = fromDate.ToUnixTimestamp().ToString(CultureInfo.InvariantCulture);
+        var expectedTo = toDate.ToUnixTimestamp().ToString(CultureInfo.InvariantCulture);
 
         var result = QueryHelper.CreateQueryParams(fromDate, toDate, currency);
 

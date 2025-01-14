@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Net;
 using FluentAssertions;
 using Xunit;
@@ -12,8 +13,8 @@ public class IntegrationTests(IntegrationFixture fixture) : IClassFixture<Integr
     public static TheoryData<string?, string?, HttpStatusCode> Cases =>
     new TheoryData<string?, string?, HttpStatusCode>
     {
-        {DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd"), DateTime.Now.ToString("yyyy-MM-dd"), HttpStatusCode.OK},
-        {DateTime.Now.AddMonths(-13).ToString("yyyy-MM-dd"), DateTime.Now.AddMonths(-12).ToString("yyyy-MM-dd"), HttpStatusCode.Unauthorized}, //Unauthorized for over 365 days old queries
+        {DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), HttpStatusCode.OK},
+        {DateTime.Now.AddMonths(-13).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), DateTime.Now.AddMonths(-12).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), HttpStatusCode.Unauthorized}, //Unauthorized for over 365 days old queries
         {"", null, HttpStatusCode.BadRequest},
     };
 
