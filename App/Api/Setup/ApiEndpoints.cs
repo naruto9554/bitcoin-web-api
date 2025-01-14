@@ -41,10 +41,6 @@ public static class ApiEndpoints
                 {
                     return Results.Problem(statusCode: (int?)ex.StatusCode);
                 }
-                catch (Exception)
-                {
-                    return Results.Problem();
-                }
             });
 
         ConfigureEndpoint(group, "/highestradingvolume",
@@ -68,10 +64,6 @@ public static class ApiEndpoints
                 {
                     return Results.Problem(statusCode: (int?)ex.StatusCode);
                 }
-                catch (Exception)
-                {
-                    return Results.Problem();
-                }
             });
 
         ConfigureEndpoint(group, "/buyandsell",
@@ -94,10 +86,6 @@ public static class ApiEndpoints
                 catch (HttpRequestException ex)
                 {
                     return Results.Problem(statusCode: (int?)ex.StatusCode);
-                }
-                catch (Exception)
-                {
-                    return Results.Problem();
                 }
             });
     }
