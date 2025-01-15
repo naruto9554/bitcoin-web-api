@@ -77,14 +77,14 @@ internal static class ApiServiceExtensions
             opt.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
             {
                 return RateLimitPartition.GetFixedWindowLimiter(
-                    partitionKey: httpContext.Request.Path.ToString(),
-                    factory: _ => new FixedWindowRateLimiterOptions
-                    {
-                        PermitLimit = 10,
-                        Window = TimeSpan.FromMinutes(1),
-                        QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-                        QueueLimit = 2
-                    });
+                partitionKey: httpContext.Request.Path.ToString(),
+                factory: _ => new FixedWindowRateLimiterOptions
+                {
+                    PermitLimit = 10,
+                    Window = TimeSpan.FromMinutes(1),
+                    QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                    QueueLimit = 2
+                });
             });
 
             opt.OnRejected = async (context, cancellationToken) =>
