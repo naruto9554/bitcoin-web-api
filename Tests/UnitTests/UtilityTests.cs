@@ -1,9 +1,9 @@
 using System.Globalization;
-using FluentAssertions;
 using Services.Exceptions;
 using Services.Extensions;
 using Services.Models;
 using Services.Utility;
+using Shouldly;
 using Xunit;
 
 namespace UnitTests;
@@ -49,9 +49,9 @@ public class UtilityTests
         var prices = marketChartPoints.Select(x => x.Price).ToList();
         var longest = prices.LongestConsecutiveDecreasingSubset();
 
-        prices.Should().NotBeEmpty();
-        prices.Count.Should().Be(numberOfDays + 2);
-        longest.Should().Be(numberOfDays);
+        prices.ShouldNotBeEmpty();
+        prices.Count.ShouldBe(numberOfDays + 2);
+        longest.ShouldBe(numberOfDays);
     }
 
     [Fact]
@@ -73,14 +73,14 @@ public class UtilityTests
 
         var result = MarketChartHelper.GetEarliestMarketChartPointsByDate(marketChartPoints);
 
-        result.Should().NotBeEmpty();
+        result.ShouldNotBeEmpty();
         if (now.TimeOfDay.Ticks == 0)
         {
-            result.Count.Should().Be(numberOfDays);
+            result.Count.ShouldBe(numberOfDays);
         }
         else
         {
-            result.Count.Should().Be(numberOfDays + 1);
+            result.Count.ShouldBe(numberOfDays + 1);
         }
     }
 
@@ -108,17 +108,17 @@ public class UtilityTests
 
         var result = MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart);
 
-        Assert.Equal(2, result.Count);
+        result.Count.ShouldBe(2);
 
-        Assert.Equal(DateTimeOffset.FromUnixTimeMilliseconds(1629811200000), result[0].Date);
-        Assert.Equal(45000, result[0].Price);
-        Assert.Equal(850000000000, result[0].MarketCap);
-        Assert.Equal(35000000000, result[0].TotalVolume);
+        result[0].Date.ShouldBe(DateTimeOffset.FromUnixTimeMilliseconds(1629811200000));
+        result[0].Price.ShouldBe(45000);
+        result[0].MarketCap.ShouldBe(850000000000);
+        result[0].TotalVolume.ShouldBe(35000000000);
 
-        Assert.Equal(DateTimeOffset.FromUnixTimeMilliseconds(1629897600000), result[1].Date);
-        Assert.Equal(46000, result[1].Price);
-        Assert.Equal(860000000000, result[1].MarketCap);
-        Assert.Equal(36000000000, result[1].TotalVolume);
+        result[1].Date.ShouldBe(DateTimeOffset.FromUnixTimeMilliseconds(1629897600000));
+        result[1].Price.ShouldBe(46000);
+        result[1].MarketCap.ShouldBe(860000000000);
+        result[1].TotalVolume.ShouldBe(36000000000);
     }
 
     [Fact]
@@ -131,10 +131,10 @@ public class UtilityTests
             TotalVolumes = []
         };
 
-        var exception = Assert.Throws<MarketChartException>(() =>
-        MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart));
+        var exception = Should.Throw<MarketChartException>(() =>
+            MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart));
 
-        Assert.Equal("Prices is null", exception.Message);
+        exception.Message.ShouldBe("Prices is null");
     }
 
     [Fact]
@@ -147,10 +147,10 @@ public class UtilityTests
             TotalVolumes = []
         };
 
-        var exception = Assert.Throws<MarketChartException>(() =>
-        MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart));
+        var exception = Should.Throw<MarketChartException>(() =>
+            MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart));
 
-        Assert.Equal("MarketCaps is null", exception.Message);
+        exception.Message.ShouldBe("MarketCaps is null");
     }
 
     [Fact]
@@ -163,10 +163,10 @@ public class UtilityTests
             TotalVolumes = null
         };
 
-        var exception = Assert.Throws<MarketChartException>(() =>
-        MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart));
+        var exception = Should.Throw<MarketChartException>(() =>
+            MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart));
 
-        Assert.Equal("TotalVolumes is null", exception.Message);
+        exception.Message.ShouldBe("TotalVolumes is null");
     }
 
     [Fact]
@@ -189,10 +189,10 @@ public class UtilityTests
             ]
         };
 
-        var exception = Assert.Throws<MarketChartException>(() =>
-        MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart));
+        var exception = Should.Throw<MarketChartException>(() =>
+            MarketChartHelper.MapMarketChartToMarketChartPoints(marketChart));
 
-        Assert.Equal("Unequal number of data points in market chart", exception.Message);
+        exception.Message.ShouldBe("Unequal number of data points in market chart");
     }
 
     [Fact]
@@ -200,15 +200,15 @@ public class UtilityTests
     {
         var fromDate = new DateOnly(2024, 8, 11);
         var toDate = new DateOnly(2024, 8, 12);
-        var currency = "eur";
+        const string currency = "eur";
         var expectedFrom = fromDate.ToUnixTimestamp().ToString(CultureInfo.InvariantCulture);
         var expectedTo = toDate.ToUnixTimestamp().ToString(CultureInfo.InvariantCulture);
 
         var result = QueryHelper.CreateQueryParams(fromDate, toDate, currency);
 
-        Assert.Equal(3, result.Count);
-        Assert.Equal(currency, result["vs_currency"]);
-        Assert.Equal(expectedFrom, result["from"]);
-        Assert.Equal(expectedTo, result["to"]);
+        result.Count.ShouldBe(3);
+        result["vs_currency"].ShouldBe(currency);
+        result["from"].ShouldBe(expectedFrom);
+        result["to"].ShouldBe(expectedTo);
     }
 }

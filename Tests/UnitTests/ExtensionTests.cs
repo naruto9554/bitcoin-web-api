@@ -1,4 +1,5 @@
 using Services.Extensions;
+using Shouldly;
 using Xunit;
 
 namespace UnitTests;
@@ -13,9 +14,9 @@ public class ExtensionTests
         var dateTimeOffset = new DateTimeOffset(year, month, day, 0, 0, 0, TimeSpan.Zero);
         var dateOnly = dateTimeOffset.ToDateOnly();
 
-        Assert.Equal(year, dateOnly.Year);
-        Assert.Equal(month, dateOnly.Month);
-        Assert.Equal(day, dateOnly.Day);
+        dateOnly.Year.ShouldBe(year);
+        dateOnly.Month.ShouldBe(month);
+        dateOnly.Day.ShouldBe(day);
     }
 
     [Theory]
@@ -26,10 +27,10 @@ public class ExtensionTests
         var dateOnly = new DateOnly(year, month, day);
         var dateTimeOffset = dateOnly.FromDateOnly();
 
-        Assert.Equal(year, dateTimeOffset.Year);
-        Assert.Equal(month, dateTimeOffset.Month);
-        Assert.Equal(day, dateTimeOffset.Day);
-        Assert.Equal(0, dateTimeOffset.Offset.Hours);
+        dateTimeOffset.Year.ShouldBe(year);
+        dateTimeOffset.Month.ShouldBe(month);
+        dateTimeOffset.Day.ShouldBe(day);
+        dateTimeOffset.Offset.Hours.ShouldBe(0);
     }
 
     [Theory]
@@ -40,7 +41,7 @@ public class ExtensionTests
         var dateOnly = new DateOnly(year, month, day);
         var unixTimestamp = dateOnly.ToUnixTimestamp();
 
-        Assert.Equal(expectedTimestamp, unixTimestamp);
+        unixTimestamp.ShouldBe(expectedTimestamp);
     }
 
     [Theory]
@@ -50,9 +51,9 @@ public class ExtensionTests
     {
         var dateOnly = unixTimestamp.FromUnixTimestamp();
 
-        Assert.Equal(expectedYear, dateOnly.Year);
-        Assert.Equal(expectedMonth, dateOnly.Month);
-        Assert.Equal(expectedDay, dateOnly.Day);
+        dateOnly.Year.ShouldBe(expectedYear);
+        dateOnly.Month.ShouldBe(expectedMonth);
+        dateOnly.Day.ShouldBe(expectedDay);
     }
 
     [Theory]
@@ -64,7 +65,7 @@ public class ExtensionTests
     {
         var result = input.IsNullOrEmpty();
 
-        Assert.Equal(expected, result);
+        result.ShouldBe(expected);
     }
 
     [Theory]
@@ -78,7 +79,7 @@ public class ExtensionTests
     {
         var result = input.LongestConsecutiveDecreasingSubset();
 
-        Assert.Equal(expected, result);
+        result.ShouldBe(expected);
     }
 
     [Theory]
@@ -92,6 +93,6 @@ public class ExtensionTests
     {
         var result = input.IsOrderedDecreasing();
 
-        Assert.Equal(expected, result);
+        result.ShouldBe(expected);
     }
 }

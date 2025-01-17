@@ -1,9 +1,9 @@
-using FluentAssertions;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 using Services;
 using Services.Extensions;
 using Services.Models;
+using Shouldly;
 using Xunit;
 
 namespace UnitTests;
@@ -100,8 +100,8 @@ public class MarketServiceTests
     {
         var result = await _marketService.GetLongestDownwardTrend(FromDate, ToDate);
 
-        result.Should().NotBeNull();
-        result.Should().Be(3);
+        result.ShouldNotBeNull();
+        result.ShouldBe(3);
     }
 
     [Fact]
@@ -109,7 +109,7 @@ public class MarketServiceTests
     {
         var result = await _marketService.GetLongestDownwardTrend(ToDateExtension, ToDateNullExtension);
 
-        result.Should().BeNull();
+        result.ShouldBeNull();
     }
 
     [Fact]
@@ -117,9 +117,9 @@ public class MarketServiceTests
     {
         var result = await _marketService.GetHighestTradingVolume(FromDate, ToDate);
 
-        result.Should().NotBeNull();
-        result?.Date.Should().Be(new DateOnly(2021, 1, 5));
-        result?.Volume.Should().Be(500m);
+        result.ShouldNotBeNull();
+        result?.Date.ShouldBe(new DateOnly(2021, 1, 5));
+        result?.Volume.ShouldBe(500m);
     }
 
     [Fact]
@@ -127,7 +127,7 @@ public class MarketServiceTests
     {
         var result = await _marketService.GetHighestTradingVolume(ToDateExtension, ToDateNullExtension);
 
-        result.Should().BeNull();
+        result.ShouldBeNull();
     }
 
     [Fact]
@@ -135,9 +135,9 @@ public class MarketServiceTests
     {
         var result = await _marketService.GetBestBuyAndSellDates(FromDate, ToDate);
 
-        result.Should().NotBeNull();
-        result?.BuyDate.Should().Be(new DateOnly(2021, 1, 4));
-        result?.SellDate.Should().Be(new DateOnly(2021, 1, 5));
+        result.ShouldNotBeNull();
+        result?.BuyDate.ShouldBe(new DateOnly(2021, 1, 4));
+        result?.SellDate.ShouldBe(new DateOnly(2021, 1, 5));
     }
 
     [Fact]
@@ -145,7 +145,7 @@ public class MarketServiceTests
     {
         var result = await _marketService.GetBestBuyAndSellDates(ToDate, ToDateExtension);
 
-        result.Should().BeNull();
+        result.ShouldBeNull();
     }
 
     [Fact]
@@ -153,6 +153,6 @@ public class MarketServiceTests
     {
         var result = await _marketService.GetBestBuyAndSellDates(ToDateExtension, ToDateNullExtension);
 
-        result.Should().BeNull();
+        result.ShouldBeNull();
     }
 }

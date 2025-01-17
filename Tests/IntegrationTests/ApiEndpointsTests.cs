@@ -1,6 +1,6 @@
 using System.Globalization;
 using System.Net;
-using FluentAssertions;
+using Shouldly;
 using Xunit;
 
 namespace IntegrationTests;
@@ -23,7 +23,7 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     public async Task LongestDownwardTrend(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var result = await _fixture.Client.GetAsync($"{BaseUrl}/longestdownwardtrend?fromDate={fromDate}&toDate={toDate}");
-        result.StatusCode.Should().BeOneOf(status, HttpStatusCode.TooManyRequests);
+        result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
     }
 
     [Theory]
@@ -31,7 +31,7 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     public async Task HighestTradingVolume(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var result = await _fixture.Client.GetAsync($"{BaseUrl}/highestradingvolume?fromDate={fromDate}&toDate={toDate}");
-        result.StatusCode.Should().BeOneOf(status, HttpStatusCode.TooManyRequests);
+        result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
     }
 
     [Theory]
@@ -39,20 +39,20 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     public async Task BuyAndSell(string? fromDate, string? toDate, HttpStatusCode status)
     {
         var result = await _fixture.Client.GetAsync($"{BaseUrl}/buyandsell?fromDate={fromDate}&toDate={toDate}");
-        result.StatusCode.Should().BeOneOf(status, HttpStatusCode.TooManyRequests);
+        result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
     }
 
     [Fact]
     public async Task Swagger()
     {
         var result = await _fixture.Client.GetAsync("/");
-        result.StatusCode.Should().Be(HttpStatusCode.OK);
+        result.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 
     [Fact]
     public async Task Health()
     {
         var result = await _fixture.Client.GetAsync("/health");
-        result.StatusCode.Should().Be(HttpStatusCode.OK);
+        result.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 }
