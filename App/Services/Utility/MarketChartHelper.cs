@@ -12,12 +12,12 @@ public static class MarketChartHelper
             throw new MarketChartException($"{nameof(marketChart.Prices)} is null");
         }
 
-        if (marketChart?.MarketCaps is null)
+        if (marketChart.MarketCaps is null)
         {
             throw new MarketChartException($"{nameof(marketChart.MarketCaps)} is null");
         }
 
-        if (marketChart?.TotalVolumes is null)
+        if (marketChart.TotalVolumes is null)
         {
             throw new MarketChartException($"{nameof(marketChart.TotalVolumes)} is null");
         }
