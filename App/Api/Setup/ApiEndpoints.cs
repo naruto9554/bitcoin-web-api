@@ -2,6 +2,7 @@ using System.Globalization;
 using Asp.Versioning;
 using Microsoft.OpenApi.Any;
 using Services;
+using System;
 
 namespace Api.Setup;
 
@@ -56,8 +57,8 @@ internal static class ApiEndpoints
                     }
                     return Results.Ok(new
                     {
-                        result?.Date,
-                        result?.Volume,
+                        result.Value.Date,
+                        result.Value.Volume,
                     });
                 }
                 catch (HttpRequestException ex)
@@ -79,8 +80,8 @@ internal static class ApiEndpoints
                     }
                     return Results.Ok(new
                     {
-                        result?.SellDate,
-                        result?.BuyDate,
+                        result.Value.SellDate,
+                        result.Value.BuyDate,
                     });
                 }
                 catch (HttpRequestException ex)
