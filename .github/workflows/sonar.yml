@@ -59,7 +59,7 @@ jobs:
         shell: powershell
         run: |
           # Start SonarCloud analysis
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"Tsingis_bitcoin-web-api" /o:"tsingis" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"Tsingis_bitcoin-web-api" /o:"tsingis" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml" /d:sonar.scanner.scanAll=false
           dotnet build --no-incremental
           dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
