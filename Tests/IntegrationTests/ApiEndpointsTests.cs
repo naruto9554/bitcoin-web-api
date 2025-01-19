@@ -1,5 +1,7 @@
 using System.Globalization;
 using System.Net;
+using System.Net.Http.Json;
+using Api.Setup;
 using Shouldly;
 using Xunit;
 
@@ -24,6 +26,12 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     {
         var result = await _fixture.Client.GetAsync($"{BaseUrl}/longestdownwardtrend?fromDate={fromDate}&toDate={toDate}");
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
+
+        if (result.StatusCode == HttpStatusCode.OK)
+        {
+            var data = await result.Content.ReadFromJsonAsync<LongestDownwardTrendResponse>();
+            data.ShouldNotBeNull();
+        }
     }
 
     [Theory]
@@ -32,6 +40,12 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     {
         var result = await _fixture.Client.GetAsync($"{BaseUrl}/highestradingvolume?fromDate={fromDate}&toDate={toDate}");
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
+
+        if (result.StatusCode == HttpStatusCode.OK)
+        {
+            var data = await result.Content.ReadFromJsonAsync<HighestTradingVolumeResponse>();
+            data.ShouldNotBeNull();
+        }
     }
 
     [Theory]
@@ -40,6 +54,12 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     {
         var result = await _fixture.Client.GetAsync($"{BaseUrl}/buyandsell?fromDate={fromDate}&toDate={toDate}");
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
+
+        if (result.StatusCode == HttpStatusCode.OK)
+        {
+            var data = await result.Content.ReadFromJsonAsync<BuyAndSellResponse>();
+            data.ShouldNotBeNull();
+        }
     }
 
     [Fact]

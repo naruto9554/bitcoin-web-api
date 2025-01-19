@@ -2,7 +2,6 @@ using System.Globalization;
 using Asp.Versioning;
 using Microsoft.OpenApi.Any;
 using Services;
-using System;
 
 namespace Api.Setup;
 
@@ -33,10 +32,7 @@ internal static class ApiEndpoints
                     {
                         return Results.NotFound();
                     }
-                    return Results.Ok(new
-                    {
-                        Days = result
-                    });
+                    return Results.Ok(new LongestDownwardTrendResponse(result.Value));
                 }
                 catch (HttpRequestException ex)
                 {
@@ -55,11 +51,11 @@ internal static class ApiEndpoints
                     {
                         return Results.NotFound();
                     }
-                    return Results.Ok(new
-                    {
+                    return Results.Ok(new HighestTradingVolumeResponse
+                    (
                         result.Value.Date,
-                        result.Value.Volume,
-                    });
+                        result.Value.Volume
+                    ));
                 }
                 catch (HttpRequestException ex)
                 {
@@ -78,11 +74,11 @@ internal static class ApiEndpoints
                     {
                         return Results.NotFound();
                     }
-                    return Results.Ok(new
-                    {
-                        result.Value.SellDate,
+                    return Results.Ok(new BuyAndSellResponse
+                    (
                         result.Value.BuyDate,
-                    });
+                        result.Value.SellDate
+                    ));
                 }
                 catch (HttpRequestException ex)
                 {
@@ -103,3 +99,7 @@ internal static class ApiEndpoints
             });
     }
 }
+
+public record LongestDownwardTrendResponse(int Days);
+public record HighestTradingVolumeResponse(DateOnly Date, decimal Volume);
+public record BuyAndSellResponse(DateOnly BuyDate, DateOnly SellDate);
