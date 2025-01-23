@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY App .
 COPY *.props .
+COPY *.config .
 
 RUN dotnet restore ./Api/Api.csproj
 
