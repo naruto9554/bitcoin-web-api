@@ -1,0 +1,13 @@
+{
+    "$schema": "https://xunit.net/schema/current/xunit.runner.schema.json",
+    "appDomain": "ifAvailable",
+    "culture": "invariant",
+    "methodDisplay": "classAndMethod",
+    "failSkips": false,
+    "failWarns": false,
+    "stopOnFail": false,
+    "maxParallelThreads": "unlimited",
+    "parallelAlgorithm": "conservative",
+    "parallelizeAssembly": false,
+    "parallelizeTestCollections": true
+  }
