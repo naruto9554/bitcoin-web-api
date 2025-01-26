@@ -4,13 +4,12 @@ using System.Threading.RateLimiting;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.Extensions.Options;
 using Serilog;
 using Services;
 
 namespace Api.Setup;
 
-internal static class ApiServiceExtensions
+internal static class ApiServices
 {
     public static void ConfigureServices(this IServiceCollection services)
     {
