@@ -11,5 +11,6 @@
     <PackageVersion Include="xunit.v3" Version="1.0.1" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.1" />
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.5.0.109200"/>
+    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
   </ItemGroup>
 </Project>
