@@ -24,12 +24,12 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     [MemberData(nameof(Cases))]
     public async Task LongestDownwardTrend(string? fromDate, string? toDate, HttpStatusCode status)
     {
-        var result = await _fixture.Client.GetAsync($"{BaseUrl}/longestdownwardtrend?fromDate={fromDate}&toDate={toDate}");
+        var result = await _fixture.Client.GetAsync($"{BaseUrl}/longestdownwardtrend?fromDate={fromDate}&toDate={toDate}", cancellationToken: TestContext.Current.CancellationToken);
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
 
         if (result.StatusCode == HttpStatusCode.OK)
         {
-            var data = await result.Content.ReadFromJsonAsync<LongestDownwardTrendResponse>();
+            var data = await result.Content.ReadFromJsonAsync<LongestDownwardTrendResponse>(cancellationToken: TestContext.Current.CancellationToken);
             data.ShouldNotBeNull();
         }
     }
@@ -38,12 +38,12 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     [MemberData(nameof(Cases))]
     public async Task HighestTradingVolume(string? fromDate, string? toDate, HttpStatusCode status)
     {
-        var result = await _fixture.Client.GetAsync($"{BaseUrl}/highestradingvolume?fromDate={fromDate}&toDate={toDate}");
+        var result = await _fixture.Client.GetAsync($"{BaseUrl}/highestradingvolume?fromDate={fromDate}&toDate={toDate}", cancellationToken: TestContext.Current.CancellationToken);
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
 
         if (result.StatusCode == HttpStatusCode.OK)
         {
-            var data = await result.Content.ReadFromJsonAsync<HighestTradingVolumeResponse>();
+            var data = await result.Content.ReadFromJsonAsync<HighestTradingVolumeResponse>(cancellationToken: TestContext.Current.CancellationToken);
             data.ShouldNotBeNull();
         }
     }
@@ -52,12 +52,12 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     [MemberData(nameof(Cases))]
     public async Task BuyAndSell(string? fromDate, string? toDate, HttpStatusCode status)
     {
-        var result = await _fixture.Client.GetAsync($"{BaseUrl}/buyandsell?fromDate={fromDate}&toDate={toDate}");
+        var result = await _fixture.Client.GetAsync($"{BaseUrl}/buyandsell?fromDate={fromDate}&toDate={toDate}", cancellationToken: TestContext.Current.CancellationToken);
         result.StatusCode.ShouldBeOneOf(status, HttpStatusCode.TooManyRequests);
 
         if (result.StatusCode == HttpStatusCode.OK)
         {
-            var data = await result.Content.ReadFromJsonAsync<BuyAndSellResponse>();
+            var data = await result.Content.ReadFromJsonAsync<BuyAndSellResponse>(cancellationToken: TestContext.Current.CancellationToken);
             data.ShouldNotBeNull();
         }
     }
@@ -65,14 +65,14 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     [Fact]
     public async Task Swagger()
     {
-        var result = await _fixture.Client.GetAsync("/");
+        var result = await _fixture.Client.GetAsync("/", cancellationToken: TestContext.Current.CancellationToken);
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 
     [Fact]
     public async Task Health()
     {
-        var result = await _fixture.Client.GetAsync("/health");
+        var result = await _fixture.Client.GetAsync("/health", cancellationToken: TestContext.Current.CancellationToken);
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 }
