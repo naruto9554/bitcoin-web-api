@@ -25,6 +25,13 @@ updates:
       serilog:
         patterns:
           - "Serilog*"
+  - package-ecosystem: "dotnet-sdk"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "21:00"
+      timezone: "Europe/Helsinki"
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
