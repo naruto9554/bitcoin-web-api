@@ -15,11 +15,12 @@ Input date format: `yyyy-MM-dd`
 
 Endpoints:
 
-- /longestdownwardtrend
-- /highestradingvolume
-- /buyandsell
+-   /longestdownwardtrend
+-   /highestradingvolume
+-   /buyandsell
 
 Tools used:
 
-- .NET 9 SDK
-- Docker
+-   .NET 9 SDK
+-   .NET report generator `dotnet tool install -g dotnet-reportgenerator-globaltool`
+-   Docker
