@@ -11,7 +11,8 @@ updates:
   - package-ecosystem: "nuget"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "wednesday"
       time: "21:00"
       timezone: "Europe/Helsinki"
     target-branch: "master"
@@ -28,7 +29,7 @@ updates:
   - package-ecosystem: "dotnet-sdk"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
       day: "wednesday"
       time: "21:00"
       timezone: "Europe/Helsinki"
