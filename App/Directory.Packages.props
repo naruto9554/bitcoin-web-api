@@ -11,7 +11,7 @@
     <PackageVersion Include="Serilog.Extensions.Hosting" Version="9.0.0" />
     <PackageVersion Include="Serilog.Settings.Configuration" Version="9.0.0" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
-    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.6.0.109712"/>
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.7.0.110445"/>
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="7.3.0" />
   </ItemGroup>
 </Project>
