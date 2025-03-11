@@ -4,9 +4,9 @@ on:
     branches:
       - master
     paths:
-      - "**/*.cs"
-      - "**/*.csproj"
-      - "**/*.props"
+      - "App/**"
+      - "Directory.Build.props"
+      - "global.json"
       - "Dockerfile"
       - ".github/workflows/scan.yml"
   workflow_call:
