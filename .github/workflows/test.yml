@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ["ubuntu-latest", "windows-latest"]
+        os: ["ubuntu-latest"]
         dotnet: ["9.0.x"]
     steps:
       - uses: actions/checkout@v4
@@ -23,9 +23,24 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ matrix.dotnet }}
+      - name: Install Report Generator
+        run: dotnet tool install --global dotnet-reportgenerator-globaltool
       - name: Restore
         run: dotnet restore
       - name: Build
-        run: dotnet build --configuration Release --no-restore
-      - name: Test
-        run: dotnet test --configuration Release --no-restore --no-build
+        run: dotnet build -c Release --no-restore
+      - name: Test & collect coverage
+        run: |
+          dotnet test -- --coverage --coverage-output-format xml --coverage-output ${{ github.workspace }}/coverage.xml
+      - name: Find coverage files and generate report
+        run: |
+          reportgenerator -reports:"${{ github.workspace }}/**/coverage.xml" \
+          -targetdir:"coverage-report" \
+          -reporttypes:MarkdownSummaryGithub
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage-report
+      - name: Add coverage to summary
+        run: cat coverage-report/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
