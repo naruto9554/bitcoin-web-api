@@ -20,9 +20,10 @@ updates:
       asp:
         patterns:
           - "Asp.Versioning.*"
-      aspnet:
+      microsoft:
         patterns:
           - "Microsoft.AspNetCore.*"
+          - "Microsoft.Extensions.*"
       serilog:
         patterns:
           - "Serilog*"
