@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Net;
 using Asp.Versioning;
 using Microsoft.OpenApi.Any;
 using Services;
@@ -7,8 +8,8 @@ namespace Api.Setup;
 
 internal static class ApiEndpoints
 {
-    private static readonly OpenApiString ExampleFromDate = new(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-    private static readonly OpenApiString ExampleToDate = new(DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+    private static readonly OpenApiString s_exampleFromDate = new(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+    private static readonly OpenApiString s_exampleToDate = new(DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
 
     public static void ConfigureEndpoints(this WebApplication app)
     {
@@ -21,8 +22,7 @@ internal static class ApiEndpoints
             .MapGroup("api/v{version:apiVersion}")
             .WithApiVersionSet(apiVersionSet);
 
-        ConfigureEndpoint(group, "/longestdownwardtrend",
-            "Get longest downward trend in days between given dates",
+        group.MapGet("/longestdownwardtrend",
             async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
             {
                 try
@@ -38,10 +38,21 @@ internal static class ApiEndpoints
                 {
                     return Results.Problem(statusCode: (int?)ex.StatusCode);
                 }
-            });
+            })
+            .WithDescription("Get longest downward trend in days between given dates")
+            .WithOpenApi(operation =>
+            {
+                operation.Parameters[0].Example = s_exampleFromDate;
+                operation.Parameters[^1].Example = s_exampleToDate;
+                return operation;
+            })
+            .Produces<HighestTradingVolumeResponse>((int)HttpStatusCode.OK)
+            .Produces((int)HttpStatusCode.NotFound)
+            .Produces((int)HttpStatusCode.BadRequest)
+            .ProducesProblem((int)HttpStatusCode.TooManyRequests)
+            .ProducesProblem((int)HttpStatusCode.InternalServerError);
 
-        ConfigureEndpoint(group, "/highestradingvolume",
-            "Get the date with the highest trading volume between given dates",
+        group.MapGet("/highestradingvolume",
             async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
             {
                 try
@@ -61,10 +72,21 @@ internal static class ApiEndpoints
                 {
                     return Results.Problem(statusCode: (int?)ex.StatusCode);
                 }
-            });
+            })
+            .WithDescription("Get the date with the highest trading volume between given dates")
+            .WithOpenApi(operation =>
+            {
+                operation.Parameters[0].Example = s_exampleFromDate;
+                operation.Parameters[^1].Example = s_exampleToDate;
+                return operation;
+            })
+            .Produces<HighestTradingVolumeResponse>((int)HttpStatusCode.OK)
+            .Produces((int)HttpStatusCode.NotFound)
+            .Produces((int)HttpStatusCode.BadRequest)
+            .ProducesProblem((int)HttpStatusCode.TooManyRequests)
+            .ProducesProblem((int)HttpStatusCode.InternalServerError);
 
-        ConfigureEndpoint(group, "/buyandsell",
-            "Get pair of dates when it is best to buy and sell between given dates",
+        group.MapGet("/buyandsell",
             async (IMarketService service, DateOnly fromDate, DateOnly toDate) =>
             {
                 try
@@ -84,19 +106,19 @@ internal static class ApiEndpoints
                 {
                     return Results.Problem(statusCode: (int?)ex.StatusCode);
                 }
-            });
-    }
-
-    private static void ConfigureEndpoint(RouteGroupBuilder group, string route, string summary, Delegate handler)
-    {
-        group.MapGet(route, handler)
+            })
+            .WithDescription("Get pair of dates when it is best to buy and sell between given dates")
             .WithOpenApi(operation =>
             {
-                operation.Summary = summary;
-                operation.Parameters[0].Example = ExampleFromDate;
-                operation.Parameters[^1].Example = ExampleToDate;
+                operation.Parameters[0].Example = s_exampleFromDate;
+                operation.Parameters[^1].Example = s_exampleToDate;
                 return operation;
-            });
+            })
+            .Produces<BuyAndSellResponse>((int)HttpStatusCode.OK)
+            .Produces((int)HttpStatusCode.NotFound)
+            .Produces((int)HttpStatusCode.BadRequest)
+            .ProducesProblem((int)HttpStatusCode.TooManyRequests)
+            .ProducesProblem((int)HttpStatusCode.InternalServerError);
     }
 }
 
