@@ -30,7 +30,7 @@ internal static class ApiEndpoints
                     var result = await service.GetLongestDownwardTrend(fromDate, toDate);
                     if (result is null)
                     {
-                        return Results.NotFound();
+                        return Results.NoContent();
                     }
                     return Results.Ok(new LongestDownwardTrendResponse(result.Value));
                 }
@@ -49,7 +49,7 @@ internal static class ApiEndpoints
                     var result = await service.GetHighestTradingVolume(fromDate, toDate);
                     if (result is null)
                     {
-                        return Results.NotFound();
+                        return Results.NoContent();
                     }
                     return Results.Ok(new HighestTradingVolumeResponse
                     (
@@ -72,7 +72,7 @@ internal static class ApiEndpoints
                     var result = await service.GetBestBuyAndSellDates(fromDate, toDate);
                     if (result is null)
                     {
-                        return Results.NotFound();
+                        return Results.NoContent();
                     }
                     return Results.Ok(new BuyAndSellResponse
                     (
