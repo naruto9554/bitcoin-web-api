@@ -63,9 +63,16 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
     }
 
     [Fact]
-    public async Task Swagger()
+    public async Task SwaggerUI()
     {
-        var result = await _fixture.Client.GetAsync("/", cancellationToken: TestContext.Current.CancellationToken);
+        var result = await _fixture.Client.GetAsync("/swagger", cancellationToken: TestContext.Current.CancellationToken);
+        result.StatusCode.ShouldBe(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task ScalarUI()
+    {
+        var result = await _fixture.Client.GetAsync("/scalar", cancellationToken: TestContext.Current.CancellationToken);
         result.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 

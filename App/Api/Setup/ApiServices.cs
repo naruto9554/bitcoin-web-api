@@ -28,9 +28,9 @@ internal static class ApiServices
             opt.SubstituteApiVersionInUrl = true;
         });
 
+        services.AddOpenApi();
 
         services.AddSwaggerGen();
-        services.ConfigureOptions<SwaggerOptions>();
 
         services.Configure<JsonOptions>(opt =>
         {
