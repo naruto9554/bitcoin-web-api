@@ -9,7 +9,7 @@
     <PackageVersion Include="Microsoft.AspNetCore.WebUtilities" Version="9.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="9.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.4" />
-    <PackageVersion Include="Scalar.AspNetCore" Version="2.1.11" />
+    <PackageVersion Include="Scalar.AspNetCore" Version="2.1.13" />
     <PackageVersion Include="Serilog" Version="4.2.0" />
     <PackageVersion Include="Serilog.Extensions.Hosting" Version="9.0.0" />
     <PackageVersion Include="Serilog.Settings.Configuration" Version="9.0.0" />
