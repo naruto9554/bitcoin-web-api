@@ -6,6 +6,7 @@
     "failSkips": false,
     "failWarns": false,
     "stopOnFail": false,
+    "diagnosticMessages": false,
     "maxParallelThreads": "unlimited",
     "parallelAlgorithm": "conservative",
     "parallelizeAssembly": false,
