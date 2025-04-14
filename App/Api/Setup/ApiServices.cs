@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
+using APIWeaver;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -29,6 +30,11 @@ internal static class ApiServices
         });
 
         services.AddOpenApi();
+
+        services.AddApiWeaver(opt =>
+        {
+            opt.AddExample<DateOnly, DateOnlyExampleProvider>();
+        });
 
         services.AddSwaggerGen();
 

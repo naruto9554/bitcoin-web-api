@@ -8,9 +8,6 @@ namespace Api.Setup;
 
 internal static class ApiEndpoints
 {
-    private static readonly OpenApiString s_exampleFromDate = new(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-    private static readonly OpenApiString s_exampleToDate = new(DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-
     public static void ConfigureEndpoints(this WebApplication app)
     {
         var apiVersionSet = app.NewApiVersionSet()
@@ -42,8 +39,8 @@ internal static class ApiEndpoints
             .WithDescription("Get longest downward trend in days between given dates")
             .WithOpenApi(operation =>
             {
-                operation.Parameters[0].Example = s_exampleFromDate;
-                operation.Parameters[^1].Example = s_exampleToDate;
+                operation.Parameters[0].Example = GetExampleString(-1);
+                operation.Parameters[^1].Example = GetExampleString();
                 return operation;
             })
             .Produces<HighestTradingVolumeResponse>((int)HttpStatusCode.OK)
@@ -76,8 +73,8 @@ internal static class ApiEndpoints
             .WithDescription("Get the date with the highest trading volume between given dates")
             .WithOpenApi(operation =>
             {
-                operation.Parameters[0].Example = s_exampleFromDate;
-                operation.Parameters[^1].Example = s_exampleToDate;
+                operation.Parameters[0].Example = GetExampleString(-1);
+                operation.Parameters[^1].Example = GetExampleString();
                 return operation;
             })
             .Produces<HighestTradingVolumeResponse>((int)HttpStatusCode.OK)
@@ -110,8 +107,8 @@ internal static class ApiEndpoints
             .WithDescription("Get pair of dates when it is best to buy and sell between given dates")
             .WithOpenApi(operation =>
             {
-                operation.Parameters[0].Example = s_exampleFromDate;
-                operation.Parameters[^1].Example = s_exampleToDate;
+                operation.Parameters[0].Example = GetExampleString(-1);
+                operation.Parameters[^1].Example = GetExampleString();
                 return operation;
             })
             .Produces<BuyAndSellResponse>((int)HttpStatusCode.OK)
@@ -119,6 +116,11 @@ internal static class ApiEndpoints
             .Produces((int)HttpStatusCode.BadRequest)
             .ProducesProblem((int)HttpStatusCode.TooManyRequests)
             .ProducesProblem((int)HttpStatusCode.InternalServerError);
+    }
+
+    private static OpenApiString GetExampleString(int addMonths = 0)
+    {
+        return new(DateOnlyExampleProvider.GetExample().AddMonths(addMonths).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
     }
 }
 
