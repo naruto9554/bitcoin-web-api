@@ -89,7 +89,32 @@ public class ApiEndpointsTests(ApiFixture fixture) : IClassFixture<ApiFixture>
 
         Should.NotThrow(() =>
         {
-            using var _ = JsonDocument.Parse(data);
+            using var document = JsonDocument.Parse(data);
+            var root = document.RootElement;
+
+            root.TryGetProperty("openapi", out var _).ShouldBeTrue("Missing 'openapi' key");
+
+            var firstPath = root.GetProperty("paths").EnumerateObject().First();
+            var parameters = firstPath.Value
+                .GetProperty("get")
+                .GetProperty("parameters");
+
+            foreach (var param in parameters.EnumerateArray())
+            {
+                string? example = null;
+
+                if (param.TryGetProperty("example", out var exampleElement))
+                {
+                    example = exampleElement.GetString();
+                }
+                else if (param.TryGetProperty("schema", out var schema) &&
+                         schema.TryGetProperty("example", out var schemaExample))
+                {
+                    example = schemaExample.GetString();
+                }
+
+                example.ShouldNotBeNullOrWhiteSpace("Missing example for parameter");
+            }
         });
     }
 
