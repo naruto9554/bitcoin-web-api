@@ -41,7 +41,7 @@ jobs:
     outputs:
       package-types: ${{ steps.set-output.outputs.package-types }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Determine Package Types
         id: set-output
         run: |
@@ -68,7 +68,7 @@ jobs:
     env:
       IMAGE_TAG: bitcoin-web-api:latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
